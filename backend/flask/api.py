@@ -5,12 +5,14 @@ import os
 import sys
 sys.path.append(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 from flask import Flask
+from flask import CORS
 from config import IP, PORT
 from errors_blueprint import errors_blueprint, error_404
 
 
 app = Flask(__name__, template_folder=os.path.join(os.path.dirname(os.path.dirname(os.path.abspath(__file__))), 'templates'), static_folder=os.path.join(os.path.dirname(os.path.dirname(os.path.abspath(__file__))), 'static'))
 app.register_blueprint(errors_blueprint)
+CORS(app)
 
 
 # Fix blueprint 404 HTTP error handler with override
