@@ -8,6 +8,7 @@ if __name__ == '__main__':
 # Flask Server
 IP = '0.0.0.0'  # Flask server IP address
 PORT = 80  # Flask server port
+SESSION_SECRET_KEY = ''  # Flask server session secret key
 
 # DataStax Astra
 DB_USERNAME = ''  # DataStax Astra database username
