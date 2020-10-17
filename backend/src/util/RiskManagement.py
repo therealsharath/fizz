@@ -7,20 +7,21 @@
 
 # finds the total invested capital from the portfolio values
 # assetID parameter here is an asset name, date bought tuple
-def calcInvestedCapital():
-    investedCapital = 0;
+def calcInvestedCapital(portfolio):
+    investedCapital = 0
     for assetID in portfolio:
         investedCapital += portfolio[assetID][0] * portfolio[assetID][1]
+    return investedCapital
 
 # for an asset in the portfolio, finds out the percentage of total capital
 # being risked and returns the percent risked and if risk management was used
 # assetID parameter here is an asset name, date bought tuple
-def percentRisk(portfolio, assetID):
+def percentRisk(portfolio, assetID, totalCapital):
     amountBought = portfolio[assetID][0]
     priceBought = portfolio[assetID][1]
     riskManagementPrice = portfolio[assetID][2]
 
-    if riskManagementPrice == None:
+    if not riskManagementPrice:
         riskManagementPrice = 0
     amountRisked = (priceBought - riskManagementPrice) * amountBought
     return (amountRisked / totalCapital, riskManagementPrice > 0)
@@ -30,15 +31,15 @@ def percentRisk(portfolio, assetID):
 # risked and if they used risk management (stop loss or downside put)
 # this should take care of one percent rule and stop-loss/downside put hedging
 # assetID parameter here is an asset name, date bought tuple
-def onePercentRule(portfolio):
+def onePercentRule(portfolio, totalCapital):
     risks = {}
-    for assetID in porfolio:
-        risks[assetID] = percentRisk(portfolio, assetID)
+    for assetID in portfolio:
+        risks[assetID] = percentRisk(portfolio, assetID, totalCapital)
     return risks
 
 # what should we diversify by? by company, industry, type of asset, mutual funds?
 # Maybe do all of them and take a weighted average to return a diversification
-# index, which could indicate how diverse the porfolio is.
+# index, which could indicate how diverse the portfolio is.
 def diverse(portfolio):
 
 
