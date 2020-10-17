@@ -24,6 +24,7 @@ def authenticate(func):
             conn = cluster.connect()
             conn.execute('USE maelstrom;')
             user = conn.execute('SELECT "uid", "email" FROM "user" WHERE "uid" = \'{uid}\' AND "email" = \'{email}\' ALLOW FILTERING;'.format(uid=uid, email=email)).one()
+            conn.shutdown()
             if user:
                 return func(*args, **kwargs)
         return jsonify({'success': False, 'authenticated': False}), 401
