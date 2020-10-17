@@ -7,10 +7,12 @@
     "@testing-library/react": "^9.3.2",
     "@testing-library/user-event": "^7.1.2",
     "axios": "^0.20.0",
+    "cors": "^2.8.5",
     "firebase": "^7.24.0",
     "react": "^16.14.0",
     "react-dom": "^16.14.0",
     "react-firebase-hooks": "^2.2.0",
+    "react-hook-form": "^6.9.3",
     "react-scripts": "3.4.3"
   },
   "scripts": {
