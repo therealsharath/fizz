@@ -22,9 +22,8 @@ def authenticate(func):
             auth_provider = PlainTextAuthProvider(DB_USERNAME, DB_PASSWORD)
             cluster = Cluster(cloud={'secure_connect_bundle': DB_BUNDLE_LOCATION}, auth_provider=auth_provider)
             conn = cluster.connect()
-            users = conn.execute('''
-            ''')
-
-            return func(*args, **kwargs)
+            user = conn.execute('SELECT "uid", "email" FROM "user" WHERE "uid" = \'{uid}\' AND "email" = \'{email}\' ALLOW FILTERING;'.format(uid=uid, email=email)).one()
+            if user:
+                return func(*args, **kwargs)
         return jsonify({'success': False, 'authenticated': False}), 401
     return wrapper
