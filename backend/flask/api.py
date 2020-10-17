@@ -16,7 +16,7 @@ CORS(app)
 
 
 # Fix blueprint 404 HTTP error handler with override
-@app.error_handler(404)
+@app.errorhandler(404)
 def error_404_override(e):
     return error_404(e)
 
