@@ -1,0 +1,55 @@
+::-webkit-scrollbar {
+  display: none;
+}
+
+.App {
+  -ms-overflow-style: none;  /* IE and Edge */
+  scrollbar-width: none;  /* Firefox */
+  text-align: center;
+}
+
+.App-header {
+  background-color: #1C1C1E;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  font-size: calc(10px + 2vmin);
+  color: #fafafa;
+}
+
+.login-screen {
+  min-width: 100vw;
+  min-height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.login-bg-image {
+  background-image: linear-gradient(rgba(0,0,0,0.5), rgba(0,0,0,0.5)),url(./components/images/login.jpg);
+  background-repeat: no-repeat;
+  background-position: center;
+  -webkit-background-size: cover;
+  -moz-background-size: cover;
+  -o-background-size: cover;
+  background-size: cover;
+}
+
+.login-box {
+  background-color: rgb(255, 255, 255, 0.3);
+  min-width: 30vw;
+  min-height: 60vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-radius: 30px;
+}
+
+@media only screen and (max-width: 600px) {
+  .login-box {
+    min-width: 70vw;
+    min-height: 70vw;
+  }
+}
