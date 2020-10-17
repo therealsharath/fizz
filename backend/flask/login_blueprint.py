@@ -2,7 +2,7 @@
 # login_blueprint.py
 
 import os
-from flask import Blueprint, request, session, jsonify
+from flask import Blueprint, request, session, make_response, jsonify
 from auth import authenticate
 
 
@@ -16,9 +16,13 @@ def post_login():
         uid = request.json.get('userId')
         email = request.json.get('userEmail')
         if uid and email:
-            session['uid'] = uid
-            session['email'] = email
-            return jsonify({'success': True})
+            #session['uid'] = uid
+            #session['email'] = email
+            #return jsonify({'success': True})
+            response = make_response(jsonify({'success': True}), 200)
+            response.set_cookie('uid', uid)
+            response.set_cookie('email', email)
+            return response
     return jsonify({'success': False}), 401
 
 
@@ -26,5 +30,9 @@ def post_login():
 @login_blueprint.route('/logout', methods=['POST'])
 @authenticate
 def post_logout():
-    session.clear()
-    return jsonify({'success': True})
+    #session.clear()
+    #return jsonify({'success': True})
+    response = make_response(jsonify({'success': True}), 200)
+    response.delete_cookie('uid')
+    response.delete_cookie('email')
+    return response
