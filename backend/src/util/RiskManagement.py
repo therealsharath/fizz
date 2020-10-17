@@ -48,17 +48,30 @@ def diverse(portfolio):
 
 # Calculates the 5-day moving average. Need the asset price data for the past
 # five days
-def fiveMovingAverage(asset, prices):
+def fiveMovingAverage(prices):
     return sum(prices) / 5
 
 # Calculates the 20-day moving average. Need the asset price data for the past
 # twenty days
-def twentyMovingAverage(asset, prices):
+def twentyMovingAverage(prices):
     return sum(prices) / 20
 
+# Calculates if a golden cross happens between the current date and the past date.
+# Needs prices data for past (20 + difference between two dates) days.
+# Note that current date is at index 0, and pastDate should be > 0
+def goldenCross(prices, pastDate):
+    currFiveDay = fiveMovingAverage(prices[:5])
+    currTwentyDay = twentyMovingAverage(prices[:20])
+    currOver = currFiveDay >= currTwentyDay
 
+    pastFiveDay = fiveMovingAverage(prices[pastDate:pastDate+5])
+    pastTwentyDay = twentyMovingAverage(prices[pastDate:pastDate+20])
+    pastUnder = pastFiveDay < pastTwentyDay
+
+    return currOver and pastUnder
 
 # Calculates if there has been a golden cross (short term MA goes above long term)
 # in the past 5 days
 # Needs price data for the past 25 days. Assume prices[0] is current day.
-def recentGoldenCross(asset, prices):
+def recentGoldenCross(prices):
+    for i in range(5):
