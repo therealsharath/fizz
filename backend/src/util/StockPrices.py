@@ -1,7 +1,12 @@
+#!/usr/bin/python3
+# StockPrices.py
+
+import os
+import sys
+sys.path.append(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 import json
 import requests
-
-apikey = "" # INSERT API KEY HERE
+from config import FMP_API_KEY as apikey
 
 # parses JSON from HTTP GET request to financialmodlingprep API
 def parseJSON(url):

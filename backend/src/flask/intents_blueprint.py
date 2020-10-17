@@ -38,7 +38,7 @@ def post_buy_asset():
 
     portfolio = aggregate_assets(uid, ignore_dates=False)
 
-    # Should I buy this asset? - Inputs: portfolio, asset
+    # Should I buy this asset? - Inputs: asset, quantity, risk price (stop loss)
     # REPLACE THIS COMMENT WITH BOBBY'S CODE
     response = ''
     return jsonify({'success': True, 'authenticated': True, 'response': response}), 200
