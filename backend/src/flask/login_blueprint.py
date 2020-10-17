@@ -13,4 +13,4 @@ login_blueprint = Blueprint('login_blueprint', __name__, template_folder=os.path
 @login_blueprint.route('/login', methods=['POST'])
 @authenticate
 def post_login():
-    return jsonify({'success': True}), 200
+    return jsonify({'success': True, 'authenticated': True}), 200

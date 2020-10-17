@@ -14,5 +14,5 @@ def authenticate(func):
             uid = request.json.get('uid')
             email = request.json.get('email')
             return func(*args, **kwargs)
-        return jsonify({'success': False})
+        return jsonify({'success': False, 'authenticated': False}), 401
     return wrapper
