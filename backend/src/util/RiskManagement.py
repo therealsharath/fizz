@@ -44,34 +44,42 @@ def diverse(portfolio):
 
 
 ################################################################################
-# Should I sell?
-
-# Calculates the 5-day moving average. Need the asset price data for the past
-# five days
-def fiveMovingAverage(prices):
-    return sum(prices) / 5
+# Should I sell? Or Should I buy?
 
 # Calculates the 20-day moving average. Need the asset price data for the past
 # twenty days
 def twentyMovingAverage(prices):
     return sum(prices) / 20
 
-# Calculates if a golden cross happens between the current date and the past date.
-# Needs prices data for past (20 + difference between two dates) days.
-# Note that current date is at index 0, and pastDate should be > 0
-def goldenCross(prices, pastDate):
-    currFiveDay = fiveMovingAverage(prices[:5])
-    currTwentyDay = twentyMovingAverage(prices[:20])
-    currOver = currFiveDay >= currTwentyDay
+# Calculates the 100-day moving average. Need the asset price data for the past
+# hundred days
+def hundredMovingAverage(prices):
+    return sum(prices) / 100
 
-    pastFiveDay = fiveMovingAverage(prices[pastDate:pastDate+5])
-    pastTwentyDay = twentyMovingAverage(prices[pastDate:pastDate+20])
-    pastUnder = pastFiveDay < pastTwentyDay
+# Calculates if there has been a golden cross (short term MA goes above long term)
+# in the past 5 days. If there has been a golden cross, maybe we should buy.
+# Needs price data for the past 105 days. Assume prices[0] is current day.
+def recentGoldenCross(prices):
+    currTwentyDay = twentyMovingAverage(prices[:20])
+    currHundredDay = hundredMovingAverage(prices[:100])
+    currOver = currTwentyDay >= currHundredDay
+
+    pastTwentyDay = twentyMovingAverage(prices[5:25])
+    pastHundredDay = hundredMovingAverage(prices[5:105])
+    pastUnder = pastTwentyDay < pastHundredDay
 
     return currOver and pastUnder
 
-# Calculates if there has been a golden cross (short term MA goes above long term)
-# in the past 5 days
-# Needs price data for the past 25 days. Assume prices[0] is current day.
-def recentGoldenCross(prices):
-    for i in range(5):
+# Calculates if there has been a death cross (short term MA goes below long term)
+# in the past 5 days. If there has been a death cross, maybe we should sell.
+# Needs price data for the past 105 days. Assume prices[0] is current day.
+def recentDeathCross(prices):
+    currTwentyDay = twentyMovingAverage(prices[:20])
+    currHundredDay = hundredMovingAverage(prices[:100])
+    currUnder = currTwentyDay < currHundredDay
+
+    pastTwentyDay = twentyMovingAverage(prices[5:25])
+    pastHundredDay = hundredMovingAverage(prices[5:105])
+    pastOver = pastTwentyDay >= pastHundredDay
+
+    return currUnder and pastOver
