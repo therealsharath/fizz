@@ -5,7 +5,7 @@ import os
 import sys
 sys.path.append(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 from flask import Flask
-from flask import CORS
+from flask_cors import CORS
 from config import IP, PORT
 from errors_blueprint import errors_blueprint, error_404
 
