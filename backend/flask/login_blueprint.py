@@ -12,12 +12,13 @@ login_blueprint = Blueprint('login_blueprint', __name__, template_folder=os.path
 # Login
 @login_blueprint.route('/login', methods=['POST'])
 def post_login():
-    uid = request.json.get('userId')
-    email = request.json.get('userEmail')
-    if uid and email:
-        session['uid'] = uid
-        session['email'] = email
-        return jsonify({'success': True})
+    if request.json:
+        uid = request.json.get('userId')
+        email = request.json.get('userEmail')
+        if uid and email:
+            session['uid'] = uid
+            session['email'] = email
+            return jsonify({'success': True})
     return jsonify({'success': False}), 401
 
 
