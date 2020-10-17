@@ -16,8 +16,8 @@ def authenticate(func):
     def wrapper(*args, **kwargs):
         # Authenticate user
         if request.json:
-            uid = request.json.get('uid')
-            email = request.json.get('email')
+            uid = request.json.get('userId')
+            email = request.json.get('userEmail')
 
             auth_provider = PlainTextAuthProvider(DB_USERNAME, DB_PASSWORD)
             cluster = Cluster(cloud={'secure_connect_bundle': DB_BUNDLE_LOCATION}, auth_provider=auth_provider)
