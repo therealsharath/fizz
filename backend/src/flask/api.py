@@ -6,7 +6,7 @@ import sys
 sys.path.append(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 from flask import Flask
 from flask_cors import CORS
-from config import IP, PORT, SESSION_SECRET_KEY
+from config import IP, PORT
 from login_blueprint import login_blueprint
 from errors_blueprint import errors_blueprint, error_404
 
@@ -14,8 +14,6 @@ from errors_blueprint import errors_blueprint, error_404
 app = Flask(__name__, template_folder=os.path.join(os.path.dirname(os.path.dirname(os.path.abspath(__file__))), 'templates'), static_folder=os.path.join(os.path.dirname(os.path.dirname(os.path.abspath(__file__))), 'static'))
 app.register_blueprint(login_blueprint)
 app.register_blueprint(errors_blueprint)
-app.config['SESSION_TYPE'] = 'filesystem'
-app.secret_key = SESSION_SECRET_KEY
 CORS(app)
 
 
