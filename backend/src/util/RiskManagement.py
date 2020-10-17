@@ -16,11 +16,7 @@ def calcInvestedCapital(portfolio):
 # for an asset in the portfolio, finds out the percentage of total capital
 # being risked and returns the percent risked and if risk management was used
 # assetID parameter here is an asset name, date bought tuple
-def percentRisk(portfolio, assetID, totalCapital):
-    amountBought = portfolio[assetID][0]
-    priceBought = portfolio[assetID][1]
-    riskManagementPrice = portfolio[assetID][2]
-
+def percentRisk(amountBought, priceBought, riskManagementPrice, totalCapital):
     if not riskManagementPrice:
         riskManagementPrice = 0
     amountRisked = (priceBought - riskManagementPrice) * amountBought
@@ -34,7 +30,8 @@ def percentRisk(portfolio, assetID, totalCapital):
 def onePercentRule(portfolio, totalCapital):
     risks = {}
     for assetID in portfolio:
-        risks[assetID] = percentRisk(portfolio, assetID, totalCapital)
+        assetDetails = portfolio[assetID]
+        risks[assetID] = percentRisk(assetDetails[0], assetDetails[1], assetDetails[2], totalCapital)
     return risks
 
 # what should we diversify by? by company, industry, type of asset, mutual funds?
@@ -44,9 +41,8 @@ def diverse(portfolio):
 
 
 
-
 ################################################################################
-# Should I sell? Or Should I buy?
+# Calculate moving averages and crossings
 
 # Calculates the 20-day moving average. Need the asset price data for the past
 # twenty days
@@ -85,3 +81,45 @@ def recentDeathCross(prices):
     pastOver = pastTwentyDay >= pastHundredDay
 
     return currUnder and pastOver
+
+
+
+################################################################################
+# Should I sell? Or Should I buy?
+
+# takes in the user's inputs on the chatbot as well as the user's portfolio to understand if
+# sell the particular asset is a good idea
+def shouldSell(portfolio, asset):
+    prices = get105prices(assetName)
+    death = recentDeathCross(prices)
+    # diversify???
+
+    if death:
+        return "This sounds like a good choice to sell, since the asset seems to have taken a downward trend."
+    else:
+        return "There is not enough information to know whether or not to sell right now."
+
+# takes in the user's inputs on the chatbot as well as the user's total capital to understand if
+# buying the particular asset is a good idea
+def shouldBuy(assetName, amountBought, riskManagementPrice, totalCapital):
+    prices = get105prices(assetName)
+    gold = recentGoldenCross(prices)
+
+    capitalRisked, riskManaged = percentRisk(amountBought, prices[0], riskManagementPrice, totalCapital)
+
+    if gold and capitalRisked <= 0.01 and riskManaged:
+        return "This sounds like a great choice to buy. Good job on managing your risks as well!"
+    elif gold and capitalRisked <= 0.01 and not riskManaged:
+        return "This sounds like a great choice to buy. Consider using a hedging your position through \
+                downside puts or stop-loss points."
+    elif gold and capitalRisked > 0.01 and riskManaged:
+        return "This sounds like a great choice to buy. However, note that you are risking more capital than advisable."
+    elif gold and capitalRisked > 0.01 and not riskManaged:
+        return "This sounds like a great choice to buy. However, note that you are risking more capital than advisable. \
+                If you hedge your position through downside puts or stop-loss points, you can lower the capital that you risk."
+    elif not gold and capitalRisked <= 0.01 and riskManaged:
+        return "This may not be a good choice to buy. However, you have managed your risks well. Please do more research \
+                to figure out if buying this asset is worth it."
+    else:
+        return "This may not be a good choice to buy."
+
