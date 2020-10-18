@@ -6,7 +6,8 @@ import sys
 sys.path.append(os.path.join(os.path.dirname(os.path.dirname(os.path.abspath(__file__))), 'util'))
 from flask import Blueprint, request, jsonify
 from auth import authenticate
-from db_assets import aggregate_assets
+from db_assets import aggregate_assets, get_total_capital
+from RiskManagement import shouldBuy, shouldSell
 
 
 
@@ -31,17 +32,19 @@ def post_buy_asset():
     if not request.json:
         return jsonify({'success': False, 'authenticated': True}), 400
 
-    asset = request.json.get('asset')
     uid = request.json.get('userId')
-    if not asset or not uid:
+    asset = request.json.get('asset')
+    quantity = request.json.get('quantity')
+    risk_management_price = request.json.get('riskManagementPrice')
+    if not uid or not asset:
         return jsonify({'success': False, 'authenticated': True}), 400
 
+    total_capital = get_total_capital(uid)
     portfolio = aggregate_assets(uid, ignore_dates=False)
 
     # Should I buy this asset? - Inputs: asset, quantity, risk price (stop loss)
-    # REPLACE THIS COMMENT WITH BOBBY'S CODE
-    response = ''
-    return jsonify({'success': True, 'authenticated': True, 'response': response}), 200
+    chatbot_response = shouldBuy(asset, quantity, risk_management_price, total_capital)
+    return jsonify({'success': True, 'authenticated': True, 'response': chatbot_response}), 200
 
 
 @intents_blueprint.route('/intents/sell_asset', methods=['POST'])
@@ -50,17 +53,16 @@ def post_sell_asset():
     if not request.json:
         return jsonify({'success': False, 'authenticated': True}), 400
 
-    asset = request.json.get('asset')
     uid = request.json.get('userId')
-    if not asset or not uid:
+    asset = request.json.get('asset')
+    if not uid or not asset:
         return jsonify({'success': False, 'authenticated': True}), 400
 
     portfolio = aggregate_assets(uid, ignore_dates=False)
 
     # Should I sell this asset? - Inputs: portfolio, asset
-    # REPLACE THIS COMMENT WITH BOBBY'S CODE
-    response = ''
-    return jsonify({'success': True, 'authenticated': True, 'response': response}), 200
+    chatbot_response = shouldSell(portfolio, asset)
+    return jsonify({'success': True, 'authenticated': True, 'response': chatbot_response}), 200
 
 
 @intents_blueprint.route('/intents/analyze_portfolio', methods=['POST'])
@@ -77,5 +79,5 @@ def post_analyze_portfolio():
 
     # Analyze my portfolio - Inputs: portfolio
     # REPLACE THIS COMMENT WITH BOBBY'S CODE
-    response = ''
-    return jsonify({'success': True, 'authenticated': True, 'response': response}), 200
+    chatbot_response = ''
+    return jsonify({'success': True, 'authenticated': True, 'response': chatbot_response}), 200

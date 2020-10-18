@@ -38,3 +38,21 @@ SELECT "label",
         for label, quantity, date in assets:
             portfolio[(label, date)] = quantity
     return portfolio
+
+
+# Get a user's total investing capital
+def get_total_capital(uid):
+    auth_provider = PlainTextAuthProvider(DB_USERNAME, DB_PASSWORD)
+    cluster = Cluster(cloud={'secure_connect_bundle': DB_BUNDLE_LOCATION}, auth_provider=auth_provider)
+    conn = cluster.connect()
+    conn.execute('USE maelstrom;')
+
+    query = '''
+SELECT "capital"
+  FROM "user"
+ WHERE "uid" = \'{uid}\'
+'''.format(uid=uid)
+    capital = conn.execute(query).one()
+    if capital:
+        return capital[0]
+    return None

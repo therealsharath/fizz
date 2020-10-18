@@ -1,3 +1,9 @@
+#!/usr/bin/python3
+# RiskManagement.py
+
+from StockPrices import get105prices
+
+
 # totalCapital - total amount the user has to invest
 # investedCapital - amount of capital invested currently
 # unusedCapital - amount of capital not invested currently (total - invested)
@@ -90,7 +96,7 @@ def recentDeathCross(prices):
 # takes in the user's inputs on the chatbot as well as the user's portfolio to understand if
 # sell the particular asset is a good idea
 def shouldSell(portfolio, asset):
-    prices = get105prices(assetName)
+    prices = get105prices(asset)
     death = recentDeathCross(prices)
     # diversify???
 
