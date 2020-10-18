@@ -8,7 +8,6 @@ import json
 import requests
 from config import FINNHUB_API_KEY as apikey
 
-
 # parses JSON from HTTP GET request to finnhub API
 def parseJSON(url):
     response = requests.get(url)

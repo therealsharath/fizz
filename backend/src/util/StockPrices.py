@@ -8,7 +8,6 @@ import json
 import requests
 from config import FMP_API_KEY as apikey
 
-
 # parses JSON from HTTP GET request to financialmodlingprep API
 def parseJSON(url):
     response = requests.get(url)
@@ -42,6 +41,18 @@ def getDataIndustry(url):
     data = parseJSON(url)
     return (data[0]['industry'], data[0]['sector'])
 
+# parses JSON from HTTP GET request to financialmodlingprep API for gainers/losers
+def getDataActiveStocks(url):
+    data = parseJSON(url)
+    actives = []
+    length = 5
+
+    for i in range(length):
+        actives.append(data[i]['ticker'])
+
+    return actives
+
+
 
 
 
@@ -66,8 +77,23 @@ def getIndustry(ticker):
     url = ("https://financialmodelingprep.com/api/v3/profile/" + ticker + "?apikey=" + apikey)
     return getDataIndustry(url)
 
+# returns list of top 5 gaining stocks
+def getGainers():
+    url = ("https://financialmodelingprep.com/api/v3/gainers?apikey=" + apikey)
+    return getDataActiveStocks(url)
+
+# returns list of top 5 losing stocks
+def getLosers():
+    url = ("https://financialmodelingprep.com/api/v3/losers?apikey=" + apikey)
+    return getDataActiveStocks(url)
+
+# returns TUPLE of top 5 gainers AND top 5 losers
+# eg. (gainers, losers)
+def getActives():
+    return (getGainers(), getLosers())
 
 # FOR DEBUGGING
 # print(get105prices("AAPL"))
 # print(getDatePrice("AAPL", "2020-09-14")) # should return $115.36
 # print(getIndustry("AAPL"))
+# print(getActives())
