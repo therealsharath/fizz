@@ -52,7 +52,7 @@ def post_portfolio_upload():
     c = 0
     query = 'INSERT INTO "asset" ("id", "uid", "label", "quantity", "bought", "price", "slp") VALUES '
     for asset in portfolio:
-        date = datetime.strptime(asset['date'], '%m/%d/%Y').strftime('%Y-%m-%d')
+        date = datetime.strptime(asset['date'][:15], '%a %b %d %Y').strftime('%Y-%m-%d')
         price = getDatePrice(asset['ticker'], date)
         query += '({id}, \'{uid}\', \'{label}\', {quantity}, \'{bought}\', {price}, {slp}), '.format(id=id + c, uid=uid, label=asset['ticker'], quantity=asset['quantity'], bought=date, price=price, slp=asset['slp'])
         c += 1
