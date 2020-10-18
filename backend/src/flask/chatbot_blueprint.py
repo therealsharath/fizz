@@ -17,7 +17,6 @@ os.environ['GOOGLE_APPLICATION_CREDENTIALS'] = GOOGLE_APPLICATION_CREDENTIALS
 
 # Chatbot endpoint
 @chatbot_blueprint.route('/chatbot/query', methods=['POST'])
-@authenticate
 def post_chatbot_query():
     uid = request.get_json(force=True).get('userId')
     query = request.get_json(force=True).get('query')

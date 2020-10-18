@@ -16,8 +16,18 @@ login_blueprint = Blueprint('login_blueprint', __name__, template_folder=os.path
 
 # Login
 @login_blueprint.route('/login', methods=['POST'])
-@authenticate
 def post_login():
+    uid = request.get_json(force=True).get('userId')
+    email = request.get_json(force=True).get('userEmail')
+
+    auth_provider = PlainTextAuthProvider(DB_USERNAME, DB_PASSWORD)
+    cluster = Cluster(cloud={'secure_connect_bundle': DB_BUNDLE_LOCATION}, auth_provider=auth_provider)
+    conn = cluster.connect()
+    conn.execute('USE maelstrom;')
+    user = conn.execute('SELECT "uid", "email" FROM "user" WHERE "uid" = \'{uid}\' AND "email" = \'{email}\' ALLOW FILTERING;'.format(uid=uid, email=email)).one()
+    if not user:
+        conn.execute('''
+SELECT''')
     return jsonify({'success': True, 'authenticated': True}), 200
 
 
