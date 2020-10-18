@@ -121,25 +121,21 @@ def shouldSell(asset):
     if death:
         if buySellIndex < -0.2:
             return "{name} sounds like a good choice to sell, since the asset seems to have taken a downward trend. \
-                    Experts also say to {opinion}".format(name = asset, opinion = recommend)
+Experts also say to {opinion}".format(name = asset, opinion = recommend)
         elif buySellIndex < 0.2:
             return "{name} sounds like a good choice to sell, since the asset seems to have taken a downward trend. \
-                    However, experts are saying that you should \
-                    {opinion}".format(name = asset, opinion = recommend)
+However, experts are saying that you should {opinion}".format(name = asset, opinion = recommend)
         else:
             return "Our algorithm determines that {name} may be a good choice to sell, since the asset seems to have \
-                    taken a downward trend. However, experts are saying not to sell. I advise that you do some \
-                    additional research into this.".format(name = asset)
+taken a downward trend. However, experts are saying not to sell. I advise that you do some additional research into this.".format(name = asset)
     else:
         if buySellIndex > 0.2:
-            return "Taking into account our algorithm and the opinions of experts, \
-                    it seems that you should not sell {name}".format(name = asset)
+            return "Taking into account our algorithm and the opinions of experts, it seems that you should not sell {name}.".format(name = asset)
         elif buySellIndex > -0.2:
-            return "According to our algorithm and the recommendations of experts, it seems best to \
-                    {opinion}".format(opinion = recommend)
+            return "According to our algorithm and the recommendations of experts, it seems best to {opinion}".format(opinion = recommend)
         else:
             return "Our algorithm does not see a clear reason to sell, but experts say that you should {opinion} \
-                    I advise that you do some additional research.".format(opinion = recommend)
+I advise that you do some additional research.".format(opinion = recommend)
 
 # takes in the user's inputs on the chatbot as well as the user's total capital to understand if
 # buying the particular asset is a good idea
@@ -151,15 +147,15 @@ def shouldBuy(asset, amountBought, riskManagementPrice, totalCapital):
 
     capitalRisked, riskManaged = percentRisk(amountBought, prices[0], riskManagementPrice, totalCapital)
 
-    returnString = "something is wrong"
+    returnString = ""
 
     if gold:
         returnString = "Our algorithm determined that {name} is a good choice to buy, since the asset seems to \
-                        have taken an upward trend. ".format(name = asset)
+have taken an upward trend. ".format(name = asset)
 
         if buySellIndex < -0.2:
             returnString += "However, experts are saying not to buy {name}. So I advise that you do some \
-                             more research into this.".format(name = asset)
+more research into this.".format(name = asset)
         elif buySellIndex < 0.2:
             returnString += "Experts note that you should be more cautious, and hold."
         else:
@@ -167,34 +163,34 @@ def shouldBuy(asset, amountBought, riskManagementPrice, totalCapital):
 
         if capitalRisked <= 0.01 and riskManaged:
             returnString += " Good job on managing your risks as well!"
-        if capitalRisked <= 0.01 and not riskManaged:
+        elif capitalRisked <= 0.01 and not riskManaged:
             returnString += " Consider hedging your position through downside puts or stop-loss points."
-        if capitalRisked > 0.01 and riskManaged:
+        elif capitalRisked > 0.01 and riskManaged:
             returnString += " Note that you are risking {risked} percent of your capital, which is more than \
-                             advisable.".format(risked = capitalRisked * 100)
-        if capitalRisked > 0.01 and not riskManaged:
+advisable.".format(risked = capitalRisked * 100)
+        elif capitalRisked > 0.01 and not riskManaged:
             returnString += " However, you are risking {risked} percent of your capital, which is more than advisable. \
-                             If you hedge your position through downside puts or stop-loss points, you can lower the \
-                             capital that you risk.".format(risked = capitalRisked * 100)
+If you hedge your position through downside puts or stop-loss points, you can lower the \
+capital that you risk.".format(risked = capitalRisked * 100)
     else:
         if buySellIndex > 0.2:
             returnString =  "Our algorithm does not see a clear reason to buy, but experts say that you should {opinion} \
-                             I advise that you do some additional research.".format(opinion = recommend)
+I advise that you do some additional research.".format(opinion = recommend)
         else:
             returnString = "Taking into account our algorithm and the recommendations of experts, we would advise \
-                            you not to buy {name}".format(name = asset)
+you not to buy {name}".format(name = asset)
 
         if capitalRisked <= 0.01 and riskManaged:
             returnString += " Regardless, good job on managing your risks as well!"
-        if capitalRisked <= 0.01 and not riskManaged:
+        elif capitalRisked <= 0.01 and not riskManaged:
             returnString += " Regardless, consider hedging your position through downside puts or stop-loss points."
-        if capitalRisked > 0.01 and riskManaged:
+        elif capitalRisked > 0.01 and riskManaged:
             returnString += " However, note that you are risking {risked} percent of your capital, which is more than \
-                             advisable.".format(risked = capitalRisked * 100)
-        if capitalRisked > 0.01 and not riskManaged:
+advisable.".format(risked = capitalRisked * 100)
+        elif capitalRisked > 0.01 and not riskManaged:
             returnString += " However, you are risking {risked} percent of your capital, which is more than advisable. \
-                             If you hedge your position through downside puts or stop-loss points, you can lower the \
-                             capital that you risk.".format(risked = capitalRisked * 100)
+If you hedge your position through downside puts or stop-loss points, you can lower the \
+capital that you risk.".format(risked = capitalRisked * 100)
     return returnString
 
 # Helper method for anaylzePortfolio that populates the string with all of the risky assets included
@@ -207,14 +203,14 @@ def populateStringWithRisks(string, riskyAssets):
 
         if capitalRisked > 0.01 and riskManaged:
             string += "You have done a good job hedging your position on {name}. However, note that you are risking {risked} \
-                       percent of your capital, which is more than advisable.\n".format(name = assetName, risked = capitalRisked * 100)
+percent of your capital, which is more than advisable.\n".format(name = assetName, risked = capitalRisked * 100)
         elif capitalRisked <= 0.01 and not riskManaged:
             string += "Good job not risking too much of your capital on {name}. However, consider using a hedging your \
-                position through downside puts or stop-loss points.\n".format(name = assetName)
+position through downside puts or stop-loss points.\n".format(name = assetName)
         elif capitalRisked > 0.01 and not riskManaged:
             string += "You are risking {risked} percent of your capital on {name}, which is more than advisable. \
-                       If you hedge your position through downside puts or stop-loss points, you can lower the capital \
-                       that you risk.\n".format(risked = capitalRisked * 100, name = assetName)
+If you hedge your position through downside puts or stop-loss points, you can lower the capital \
+that you risk.\n".format(risked = capitalRisked * 100, name = assetName)
     return string
 
 # analyzes the given portfolio with unused capital and some (2 or 3) of the five basic rules of risk management
