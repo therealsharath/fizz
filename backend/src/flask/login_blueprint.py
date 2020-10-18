@@ -46,7 +46,7 @@ def post_portfolio_upload():
     cluster = Cluster(cloud={'secure_connect_bundle': DB_BUNDLE_LOCATION}, auth_provider=auth_provider)
     conn = cluster.connect()
     conn.execute('USE maelstrom;')
-    conn.execute('DELETE FROM "asset" WHERE "uid" = \'{uid}\';'.format(uid=uid))
+    #conn.execute('DELETE FROM "asset" WHERE "uid" = \'{uid}\';'.format(uid=uid))
 
     id = conn.execute('SELECT "id" FROM "pkid" WHERE "label" = \'asset\';').one()[0]
     c = 0
