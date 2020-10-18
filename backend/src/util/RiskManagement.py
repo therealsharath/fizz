@@ -151,7 +151,7 @@ def shouldBuy(asset, amountBought, riskManagementPrice, totalCapital):
 
     capitalRisked, riskManaged = percentRisk(amountBought, prices[0], riskManagementPrice, totalCapital)
 
-    returnString = ""
+    returnString = "something is wrong"
 
     if gold:
         returnString = "Our algorithm determined that {name} is a good choice to buy, since the asset seems to \

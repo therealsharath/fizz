@@ -12,6 +12,7 @@ from config import DIALOGFLOW_PROJECT_ID, GOOGLE_APPLICATION_CREDENTIALS
 
 
 chatbot_blueprint = Blueprint('chatbot_blueprint', __name__, template_folder=os.path.join(os.path.dirname(os.path.dirname(os.path.abspath(__file__))), 'templates'), static_folder=os.path.join(os.path.dirname(os.path.dirname(os.path.abspath(__file__))), 'static'))
+os.environ['GOOGLE_APPLICATION_CREDENTIALS'] = GOOGLE_APPLICATION_CREDENTIALS
 
 
 # Chatbot endpoint
