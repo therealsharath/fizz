@@ -2,6 +2,7 @@ import React from 'react';
 import { useEffect, useState } from 'react';
 import axios from 'axios';
 import gImg from './images/G.png';
+import fizz from './images/fizzlogo.png';
 
 import firebase from 'firebase/app';
 import 'firebase/firestore';
@@ -63,7 +64,6 @@ function Authentication(props) {
             };
             axios(config)
             .then(function (response) {
-                console.log(JSON.stringify(response.data));
             })
             .catch(function (error) {
                 console.log(error);
@@ -90,7 +90,10 @@ function Authentication(props) {
     return(
         !user ? <div className="login-screen login-bg-image">
             <div className="login-box">
-                 <SignIn/>
+                <img src={fizz} className="main-logo"/>
+                <div className="simply">
+                    <SignIn/>
+                </div>
             </div>
         </div> : <SignOut/>
     )

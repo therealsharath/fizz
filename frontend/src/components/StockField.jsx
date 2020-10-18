@@ -22,6 +22,7 @@ function StockField(props) {
     const onSubmit = (data) => {
         reset();
         let newPortfolio = [...props.portfolio]
+        data.date = data.date.toString()
         newPortfolio.push(data)
         console.log(newPortfolio);
         props.setPortfolio(newPortfolio)
@@ -44,11 +45,12 @@ function StockField(props) {
                 <Controller
                     as={ReactDatePicker}
                     control={control}
-                    valueName={selected} // DateSelect value's name is selected
+                    valueName={selected.getDate()} // DateSelect value's name is selected
                     onChange={(chosen) => setSelected(chosen)}
-                    name="ReactDatePicker"
+                    name="date"
                     className="input"
                     placeholderText="Select date"
+                    dateFormat="yyyy/MM/dd"
                     maxDate={new Date()}
                 />
             </div>

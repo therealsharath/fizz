@@ -61,9 +61,20 @@ button:hover {
   min-width: 30vw;
   min-height: 60vh;
   display: flex;
-  justify-content: center;
+  justify-content: space-around;
   align-items: center;
   border-radius: 30px;
+  flex-direction: column;
+  border: 3vw;
+}
+
+.main-logo {
+  width : 20vw;
+  border-radius: 20px;
+}
+
+.simply {
+  padding: 1vw 0;
 }
 
 .google-icon {
@@ -104,6 +115,10 @@ button:hover {
   padding: 0vw 2vw;
 }
 
+.logo-image {
+  max-width: 2.5vw;
+}
+
 .nav-wrapper {
   display: flex;
   justify-content: center;
@@ -134,6 +149,10 @@ button:hover {
   background-size: cover;
   padding: 2vw;
   overflow-x: hidden;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
 }
 
 .chat-bot {
@@ -185,6 +204,52 @@ input, select {
 .label {
   padding-left: 2px;
 }
+
+.container {
+  max-width: 40vw;
+  border: 2px solid #dedede;
+  background-color: #f1f1f1;
+  border-radius: 5px;
+  padding: 10px;
+  margin: 10px 0;
+  display: flex;
+  align-items: center;
+}
+
+.bot-message {
+  flex-direction: row-reverse;
+  border-color: #ccc;
+  background-color: #ddd;
+}
+
+.container::after {
+  content: "";
+  clear: both;
+  display: table;
+}
+
+.container img {
+  max-width: 60px;
+  width: 90%;
+  margin-right: 20px;
+  border-radius: 50%;
+}
+
+.bot-text {
+  text-align: right;
+  padding-right: 2vw;
+}
+
+.time-right {
+  float: right;
+  color: #aaa;
+}
+
+.time-left {
+  float: left;
+  color: #999;
+}
+
 
 @media only screen and (max-width: 600px) {
   .login-box {
