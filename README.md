@@ -20,7 +20,7 @@ A user opens Fizz and is greeted by a prompt to fill out and upload their portfo
 Visit stonkify.tech to use Fizz!
 
 ### Resources:
-https://www.blackrock.com/tools/api-tester/hackathon
-https://financialmodelingprep.com/api/v3
-https://cloud.google.com/dialogflow/docs
-https://www.datastax.com/products/datastax-astra
+* https://www.blackrock.com/tools/api-tester/hackathon
+* https://financialmodelingprep.com/api/v3
+* https://cloud.google.com/dialogflow/docs
+* https://www.datastax.com/products/datastax-astra
