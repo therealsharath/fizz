@@ -1,0 +1,28 @@
+{
+  "files": {
+    "main.css": "/hackgt7/static/css/main.95be1305.chunk.css",
+    "main.js": "/hackgt7/static/js/main.53137d55.chunk.js",
+    "main.js.map": "/hackgt7/static/js/main.53137d55.chunk.js.map",
+    "runtime-main.js": "/hackgt7/static/js/runtime-main.837eaa26.js",
+    "runtime-main.js.map": "/hackgt7/static/js/runtime-main.837eaa26.js.map",
+    "static/css/2.08a81a33.chunk.css": "/hackgt7/static/css/2.08a81a33.chunk.css",
+    "static/js/2.7ebf31b8.chunk.js": "/hackgt7/static/js/2.7ebf31b8.chunk.js",
+    "static/js/2.7ebf31b8.chunk.js.map": "/hackgt7/static/js/2.7ebf31b8.chunk.js.map",
+    "index.html": "/hackgt7/index.html",
+    "precache-manifest.feb3a68c9d4aaf36490dc702656feb79.js": "/hackgt7/precache-manifest.feb3a68c9d4aaf36490dc702656feb79.js",
+    "service-worker.js": "/hackgt7/service-worker.js",
+    "static/css/2.08a81a33.chunk.css.map": "/hackgt7/static/css/2.08a81a33.chunk.css.map",
+    "static/css/main.95be1305.chunk.css.map": "/hackgt7/static/css/main.95be1305.chunk.css.map",
+    "static/js/2.7ebf31b8.chunk.js.LICENSE.txt": "/hackgt7/static/js/2.7ebf31b8.chunk.js.LICENSE.txt",
+    "static/media/G.png": "/hackgt7/static/media/G.0b1e5c66.png",
+    "static/media/App.css": "/hackgt7/static/media/login.158baf87.jpg",
+    "static/media/fizzlogo.png": "/hackgt7/static/media/fizzlogo.4b93b019.png"
+  },
+  "entrypoints": [
+    "static/js/runtime-main.837eaa26.js",
+    "static/css/2.08a81a33.chunk.css",
+    "static/js/2.7ebf31b8.chunk.js",
+    "static/css/main.95be1305.chunk.css",
+    "static/js/main.53137d55.chunk.js"
+  ]
+}
