@@ -59,7 +59,7 @@ def analyze_portfolio(uid=None, **kwargs):
 
 # Dialogflow intents
 intents = {
-    'BUY': buy_asset,
-    'SELL': sell_asset,
+    'BUY_ASSET': buy_asset,
+    'SELL_ASSET': sell_asset,
     'ANALYZE_PORTFOLIO': analyze_portfolio
 }
