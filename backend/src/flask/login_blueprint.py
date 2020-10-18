@@ -57,6 +57,7 @@ def post_portfolio_upload():
         query += '({id}, \'{uid}\', \'{label}\', {quantity}, \'{bought}\', {price}, {slp}), '.format(id=id + c, uid=uid, label=asset['ticker'], quantity=asset['quantity'], bought=date, price=price, slp=asset['slp'])
         c += 1
     query = query[:-2] + ';'
+    conn.execute(query)
     conn.execute('UPDATE "pkid" SET "id" = "id" + {c} WHERE "label" = \'asset\';'.format(c=c))
     conn.shutdown()
     return jsonify({'success': True, 'authenticate': True}), 200
