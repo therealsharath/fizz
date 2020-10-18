@@ -23,3 +23,4 @@ DIALOGFLOW_PROJECT_ID = ''  # Project ID of Dialogflow application
 # API Keys
 GOOGLE_APPLICATION_CREDENTIALS = os.path.join(os.path.dirname(os.path.abspath(__file__)), 'hackgt7-google.json')  # Location of JSON file containing Google application credentials
 FMP_API_KEY = ''  # Financial Modeling Prep API Key
+FINNHUB_API_KEY = ''  # Finnhub.io API Key
