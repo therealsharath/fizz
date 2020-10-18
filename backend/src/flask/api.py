@@ -8,11 +8,13 @@ from flask import Flask, request, jsonify
 from flask_cors import CORS
 from config import IP, PORT
 from login_blueprint import login_blueprint
+from dialogflow_blueprint import dialogflow_blueprint
 from errors_blueprint import errors_blueprint, error_404
 
 
 app = Flask(__name__, template_folder=os.path.join(os.path.dirname(os.path.dirname(os.path.abspath(__file__))), 'templates'), static_folder=os.path.join(os.path.dirname(os.path.dirname(os.path.abspath(__file__))), 'static'))
 app.register_blueprint(login_blueprint)
+app.register_blueprint(dialogflow_blueprint)
 app.register_blueprint(errors_blueprint)
 CORS(app)
 

@@ -44,7 +44,7 @@ def onePercentRule(portfolio, totalCapital):
 # Maybe do all of them and take a weighted average to return a diversification
 # index, which could indicate how diverse the portfolio is.
 def diverse(portfolio):
-
+    pass
 
 
 ################################################################################
@@ -95,7 +95,7 @@ def recentDeathCross(prices):
 
 # takes in the user's inputs on the chatbot as well as the user's portfolio to understand if
 # sell the particular asset is a good idea
-def shouldSell(portfolio, asset):
+def shouldSell(asset):
     prices = get105prices(asset)
     death = recentDeathCross(prices)
     # diversify???
