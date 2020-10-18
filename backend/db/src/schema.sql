@@ -23,5 +23,7 @@ CREATE TABLE "asset" (
     "uid" VARCHAR,
     "label" VARCHAR,
     "quantity" INT,
-    "bought" TIMESTAMP
+    "bought" TIMESTAMP,
+    "price" FLOAT,
+    "slp" FLOAT
 );

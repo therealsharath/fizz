@@ -21,7 +21,9 @@ def aggregate_assets(uid, ignore_dates=False):
     query = '''
 SELECT "label",
        "quantity",
-       "bought"
+       "bought",
+       "price",
+       "slp"
   FROM "asset"
  WHERE "uid" = \'{uid}\';
 '''.format(uid=uid)
@@ -35,8 +37,8 @@ SELECT "label",
                 portfolio[label] = 0
             portfolio[label] += quantity
     else:
-        for label, quantity, date in assets:
-            portfolio[(label, date)] = quantity
+        for label, quantity, date, price, slp in assets:
+            portfolio[(label, date)] = (quantity, price, slp)
     return portfolio
 
 
