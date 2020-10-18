@@ -3,6 +3,7 @@
 
 from StockPrices import get105prices
 from AnalystRecommendations import getRecommendations
+from BlackRockData import getRisk
 
 
 # totalCapital - total amount the user has to invest
@@ -92,18 +93,28 @@ def recentDeathCross(prices):
 
     return currUnder and pastOver
 
-#
+# return a string representing what experts think regarding a certain asset depending
+# on the given buySellIndex (taken from API)
 def calcBuySellOpinions(buySellIndex):
-    if buySellIndex < -0.6:
+    if buySellIndex < 0.2:
         return "sell, sell, sell!"
-    elif buySellIndex < -0.2:
+    elif buySellIndex < 0.4:
         return "sell, but maybe hold."
-    elif buySellIndex < 0.2:
-        return "hold."
     elif buySellIndex < 0.6:
+        return "hold."
+    elif buySellIndex < 0.8:
         return "buy, but maybe hold."
     else:
         return "buy, buy, buy!"
+
+# return a string representing risk factors certain asset depending on the given riskIndex (taken from API)
+def calcPossibleRisk(riskIndex):
+    if riskIndex < 0:
+        return "risky"
+    elif riskIndex < 0.33:
+        return "moderately risky"
+    else:
+        return "not very risky"
 
 
 ################################################################################
@@ -119,20 +130,20 @@ def shouldSell(asset):
     # diversify???
 
     if death:
-        if buySellIndex < -0.2:
+        if buySellIndex < 0.4:
             return "{name} sounds like a good choice to sell, since the asset seems to have taken a downward trend. \
 Experts also say to {opinion}".format(name = asset, opinion = recommend)
-        elif buySellIndex < 0.2:
+        elif buySellIndex < 0.6:
             return "{name} sounds like a good choice to sell, since the asset seems to have taken a downward trend. \
-However, experts are saying that you should {opinion}".format(name = asset, opinion = recommend)
+However, experts are saying that you should hold.".format(name = asset, opinion = recommend)
         else:
             return "Our algorithm determines that {name} may be a good choice to sell, since the asset seems to have \
 taken a downward trend. However, experts are saying not to sell. I advise that you do some additional research into this.".format(name = asset)
     else:
-        if buySellIndex > 0.2:
+        if buySellIndex >= 0.6:
             return "Taking into account our algorithm and the opinions of experts, it seems that you should not sell {name}.".format(name = asset)
-        elif buySellIndex > -0.2:
-            return "According to our algorithm and the recommendations of experts, it seems best to {opinion}".format(opinion = recommend)
+        elif buySellIndex >= 0.4:
+            return "According to our algorithm and the recommendations of experts, it seems best to hold.".format(opinion = recommend)
         else:
             return "Our algorithm does not see a clear reason to sell, but experts say that you should {opinion} \
 I advise that you do some additional research.".format(opinion = recommend)
@@ -144,6 +155,8 @@ def shouldBuy(asset, amountBought, riskManagementPrice, totalCapital):
     gold = recentGoldenCross(prices)
     buySellIndex = getRecommendations(asset)
     recommend = calcBuySellOpinions(buySellIndex)
+    riskIndex = getRisk(asset)
+    possibleRisk = calcPossibleRisk(riskIndex)
 
     capitalRisked, riskManaged = percentRisk(amountBought, prices[0], riskManagementPrice, totalCapital)
 
@@ -153,42 +166,44 @@ def shouldBuy(asset, amountBought, riskManagementPrice, totalCapital):
         returnString = "Our algorithm determined that {name} is a good choice to buy, since the asset seems to \
 have taken an upward trend. ".format(name = asset)
 
-        if buySellIndex < -0.2:
+        if buySellIndex < 0.4:
             returnString += "However, experts are saying not to buy {name}. So I advise that you do some \
-more research into this.".format(name = asset)
-        elif buySellIndex < 0.2:
-            returnString += "Experts note that you should be more cautious, and hold."
+more research into this. ".format(name = asset)
+        elif buySellIndex < 0.6:
+            returnString += "Experts note that you should be more cautious, and hold. "
         else:
-            returnString += "Experts agree that you should {opinion}".format(opinion = recommend)
+            returnString += "Experts agree that you should {opinion} ".format(opinion = recommend)
+
+        returnString += "Our algorithm has also decided that buying {name} is {risk}. ".format(name = asset, risk = possibleRisk)
 
         if capitalRisked <= 0.01 and riskManaged:
-            returnString += " Good job on managing your risks as well!"
+            returnString += "Regardless, good job on managing your risks as well!"
         elif capitalRisked <= 0.01 and not riskManaged:
-            returnString += " Consider hedging your position through downside puts or stop-loss points."
+            returnString += "Regardless, consider hedging your position through downside puts or stop-loss points."
         elif capitalRisked > 0.01 and riskManaged:
-            returnString += " Note that you are risking {risked} percent of your capital, which is more than \
+            returnString += "However, you are risking {risked} percent of your capital, which is more than \
 advisable.".format(risked = capitalRisked * 100)
         elif capitalRisked > 0.01 and not riskManaged:
-            returnString += " However, you are risking {risked} percent of your capital, which is more than advisable. \
+            returnString += "However, you are risking {risked} percent of your capital, which is more than advisable. \
 If you hedge your position through downside puts or stop-loss points, you can lower the \
 capital that you risk.".format(risked = capitalRisked * 100)
     else:
-        if buySellIndex > 0.2:
+        if buySellIndex >= 0.6:
             returnString =  "Our algorithm does not see a clear reason to buy, but experts say that you should {opinion} \
-I advise that you do some additional research.".format(opinion = recommend)
+I advise that you do some additional research. ".format(opinion = recommend)
         else:
             returnString = "Taking into account our algorithm and the recommendations of experts, we would advise \
-you not to buy {name}".format(name = asset)
+you not to buy {name} ".format(name = asset)
 
         if capitalRisked <= 0.01 and riskManaged:
-            returnString += " Regardless, good job on managing your risks as well!"
+            returnString += "Regardless, good job on managing your risks as well!"
         elif capitalRisked <= 0.01 and not riskManaged:
-            returnString += " Regardless, consider hedging your position through downside puts or stop-loss points."
+            returnString += "Regardless, consider hedging your position through downside puts or stop-loss points."
         elif capitalRisked > 0.01 and riskManaged:
-            returnString += " However, note that you are risking {risked} percent of your capital, which is more than \
+            returnString += "However, note that you are risking {risked} percent of your capital, which is more than \
 advisable.".format(risked = capitalRisked * 100)
         elif capitalRisked > 0.01 and not riskManaged:
-            returnString += " However, you are risking {risked} percent of your capital, which is more than advisable. \
+            returnString += "However, you are risking {risked} percent of your capital, which is more than advisable. \
 If you hedge your position through downside puts or stop-loss points, you can lower the \
 capital that you risk.".format(risked = capitalRisked * 100)
     return returnString
