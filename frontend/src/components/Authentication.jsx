@@ -19,7 +19,6 @@ firebase.initializeApp({
     appId:  process.env.REACT_APP_FIREBASE_APP_ID,
 })
 
-
 const auth = firebase.auth();
 
 function SignIn() {
@@ -40,6 +39,7 @@ function SignOut() {
         <button className="nav-button" onClick={() => auth.signOut()}>Sign Out</button>
     )
 }
+
 
 function Authentication(props) {
     const [user] = useAuthState(auth);
@@ -75,12 +75,14 @@ function Authentication(props) {
             if(isLogged && !dataSent) { 
                 sendUserData();
                 setDataSent(true);
+                props.setUser(user);
             };
             props.setIsLogged(true);
         } else {
             isLogged && setIsLogged(false)
             setDataSent(false);
             props.setIsLogged(false);
+            props.setUser(user);
         }
 
     }, [user, isLogged, setIsLogged, dataSent, setDataSent, props])

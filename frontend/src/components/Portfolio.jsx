@@ -2,13 +2,19 @@ import React from 'react';
 import { useState } from 'react';
 import StockField from './StockField.jsx';
 
-function Portfolio() {
-    const [stockNumber, setStockNumber] = useState(0)
-    const [portfolio, setPortfolio] = useState([])
+function Portfolio(props) {
+    const [portfolio, setPortfolio] = useState(props.portfolio);
+
+    const submitPortFolio = () => {
+        props.setPortfolio(portfolio);
+        console.log(portfolio)
+    }
 
     return(
         <div>
-            <StockField/>
+            {portfolio !== [] && portfolio.map((item) => <div>{item.ticker}</div>)}
+            <StockField portfolio={portfolio} setPortfolio={setPortfolio}/>
+            <button onClick={submitPortFolio}>Submit Portfolio</button>
         </div>
     )
 }

@@ -28,14 +28,14 @@ button:hover {
 }
 
 .App-header {
-  background-color: #1C1C1E;
+  /* background-color: #1C1C1E; */
   min-height: 100vh;
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
   font-size: calc(10px + 2vmin);
-  color: #fafafa;
+  /* color: #fafafa; */
 }
 
 .login-screen {
@@ -140,6 +140,50 @@ button:hover {
   min-height: 80vh;
   min-width: 80vw;
   border-radius: 15px;
+}
+
+.new-stock {
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  width: 80vw;
+  height: 10vh;
+  padding: 2vw;
+}
+
+input, select {
+  width: 15vw;
+  padding: 12px 20px;
+  margin: 8px 0;
+  display: inline-block;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  box-sizing: border-box;
+}
+
+.form-button {
+  background-color: #1C1C1E;
+  border-radius: 30px;
+  border-style: none;
+  color: #fafafa;
+  padding: 1vw 2vw;
+  font-family: 'Noto Sans JP', sans-serif;
+  font-weight: 500;
+}
+
+.form-item {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  font-size: 1vw;
+}
+
+.buffer {
+  padding-bottom: 1vw;
+}
+
+.label {
+  padding-left: 2px;
 }
 
 @media only screen and (max-width: 600px) {

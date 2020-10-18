@@ -9,6 +9,9 @@ function Home() {
     const [isStonks, setStonks] = useState(true);
     const [isAbout, setIsAbout] = useState(false);
 
+    const [user, setUser] = useState(null);
+    const [portfolio, setPortfolio] = useState([]);
+
     const handleUpload = () => {
         setIsUpload(true);
         setStonks(false);
@@ -30,19 +33,19 @@ function Home() {
     return(
         <div>
             {!isLogged ? 
-                <Authentication setIsLogged={setIsLogged}/> :
+                <Authentication setIsLogged={setIsLogged} setUser={setUser}/> :
                 <div>
                     <div className="navbar">
                         <div className="nav-wrapper">
                             <div className="logo">LO</div>
                             <div className="nav-link" onClick={handleUpload}>Upload</div>
                             <div className="nav-link" onClick={handleStonks}>Stonks</div>
-                            <div className="nav-link" onClick={handleUpload}>About</div>
+                            <div className="nav-link" onClick={handleAbout}>About</div>
                         </div>
-                        <div className="sign-out-nav"><Authentication setIsLogged={setIsLogged}/></div>
+                        <div className="sign-out-nav"><Authentication setIsLogged={setIsLogged} setUser={setUser}/></div>
                     </div>
-                    {isUpload && <Portfolio/>}
-                    {isStonks && <Chatbot/>}
+                    {isUpload && <Portfolio portfolio={portfolio} setPortfolio={setPortfolio}/>}
+                    {isStonks && <Chatbot user={user}/>}
                 </div>
             }
         </div>
