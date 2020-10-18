@@ -114,15 +114,17 @@ button:hover {
   text-decoration: none;
   color: #fafafa;
   padding: 0 1vw;
-  font-size: 1.25vw;
+  font-size: 1.1vw;
+  text-transform: uppercase;
 }
 
 .nav-link:hover {
   color: blanchedalmond;
+  cursor: pointer;
 }
 
 .bot {
-  height: 89.75vh;
+  height: 82vh;
   background-image: linear-gradient(rgba(0,0,0,0.75), rgba(0,0,0,0.75)),url(./components/images/chat-bg.jpg);
   background-repeat: no-repeat;
   background-position: center;
@@ -130,19 +132,15 @@ button:hover {
   -moz-background-size: cover;
   -o-background-size: cover;
   background-size: cover;
-}
-
-/* 
-.bot-container {
   padding: 2vw;
+  overflow-x: hidden;
 }
 
-.chat {
-  background-color: rgb(255, 255, 255, 0.5);
-  border-radius: 20px;
+.chat-bot {
   min-height: 80vh;
   min-width: 80vw;
-} */
+  border-radius: 15px;
+}
 
 @media only screen and (max-width: 600px) {
   .login-box {
