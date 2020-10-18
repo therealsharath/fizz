@@ -53,6 +53,7 @@ SELECT "capital"
  WHERE "uid" = \'{uid}\'
 '''.format(uid=uid)
     capital = conn.execute(query).one()
+    conn.shutdown()
     if capital:
         return capital[0]
     return None
