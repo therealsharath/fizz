@@ -118,7 +118,7 @@ def shouldSell(asset):
     recommend = calcBuySellOpinions(buySellIndex)
     # diversify???
 
-    if death
+    if death:
         if buySellIndex < -0.2:
             return "{name} sounds like a good choice to sell, since the asset seems to have taken a downward trend. \
                     Experts also say to {opinion}".format(name = asset, opinion = recommend)
