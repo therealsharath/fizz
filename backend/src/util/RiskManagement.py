@@ -135,15 +135,15 @@ def shouldSell(asset):
 Experts also say to {opinion}".format(name = asset, opinion = recommend)
         elif buySellIndex < 0.6:
             return "{name} sounds like a good choice to sell, since the asset seems to have taken a downward trend. \
-However, experts are saying that you should {opinion}".format(name = asset, opinion = recommend)
+However, experts are saying that you should hold.".format(name = asset, opinion = recommend)
         else:
             return "Our algorithm determines that {name} may be a good choice to sell, since the asset seems to have \
 taken a downward trend. However, experts are saying not to sell. I advise that you do some additional research into this.".format(name = asset)
     else:
-        if buySellIndex > 0.6:
+        if buySellIndex >= 0.6:
             return "Taking into account our algorithm and the opinions of experts, it seems that you should not sell {name}.".format(name = asset)
-        elif buySellIndex > 0.4:
-            return "According to our algorithm and the recommendations of experts, it seems best to {opinion}".format(opinion = recommend)
+        elif buySellIndex >= 0.4:
+            return "According to our algorithm and the recommendations of experts, it seems best to hold.".format(opinion = recommend)
         else:
             return "Our algorithm does not see a clear reason to sell, but experts say that you should {opinion} \
 I advise that you do some additional research.".format(opinion = recommend)
@@ -188,7 +188,7 @@ advisable.".format(risked = capitalRisked * 100)
 If you hedge your position through downside puts or stop-loss points, you can lower the \
 capital that you risk.".format(risked = capitalRisked * 100)
     else:
-        if buySellIndex > 0.6:
+        if buySellIndex >= 0.6:
             returnString =  "Our algorithm does not see a clear reason to buy, but experts say that you should {opinion} \
 I advise that you do some additional research. ".format(opinion = recommend)
         else:
