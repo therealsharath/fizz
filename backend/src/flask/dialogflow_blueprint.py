@@ -18,11 +18,12 @@ def post_dialogflow_webhook():
     try:
         if not request.get_json(force=True).get('queryResult').get('allRequiredParamsPresent'):
             raise TypeError
+        uid = request.get_json(force=True).get('session').split('/')[-1]
         action = request.get_json(force=True).get('queryResult').get('action')
         parameters = request.get_json(force=True).get('queryResult').get('parameters')
     except TypeError:
         return jsonify({'success': False, 'fulfillmentText': 'Something went wrong with your request.'}), 400
-    chatbot_response = intents[action](**parameters)
+    chatbot_response = intents[action](uid=uid, **parameters)
     return jsonify({'success': True, 'fulfillmentText': chatbot_response})
 
 
@@ -30,8 +31,8 @@ def post_dialogflow_webhook():
 @dialogflow_blueprint.route('/dialogflow/intents', methods=['GET'])
 def get_all_intents():
     return jsonify({
-        'BUY': 'Should I buy this asset?',
-        'SELL': 'Should I sell this asset?',
+        'BUY_ASSET': 'Should I buy this asset?',
+        'SELL_ASSET': 'Should I sell this asset?',
         'ANALYZE_PORTFOLIO': 'Can you analyze my current portfolio?'
     }), 200
 

@@ -1,7 +1,13 @@
+#!/usr/bin/python3
+# StockPrices.py
+
+import os
+import sys
+sys.path.append(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 import json
 import requests
+from config import FINNHUB_API_KEY as apikey
 
-apikey = "" # INSERT API KEY HERE (FINNHUB.IO)
 
 # parses JSON from HTTP GET request to finnhub API
 def parseJSON(url):

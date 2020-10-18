@@ -8,6 +8,7 @@ import json
 import requests
 from config import FMP_API_KEY as apikey
 
+
 # parses JSON from HTTP GET request to financialmodlingprep API
 def parseJSON(url):
     response = requests.get(url)
