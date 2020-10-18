@@ -1,4 +1,4 @@
--- populate.cql
+-- populate.sql
 -- Delete existing data in tables
 DELETE FROM "pkid";
 
