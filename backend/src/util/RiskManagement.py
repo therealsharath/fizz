@@ -91,7 +91,7 @@ def recentDeathCross(prices):
 
 
 ################################################################################
-# Should I sell? Or Should I buy?
+# Endpoints: Should I sell? Or Should I buy? Analyze my portfolio.
 
 # takes in the user's inputs on the chatbot as well as the user's portfolio to understand if
 # sell the particular asset is a good idea
@@ -107,8 +107,8 @@ def shouldSell(portfolio, asset):
 
 # takes in the user's inputs on the chatbot as well as the user's total capital to understand if
 # buying the particular asset is a good idea
-def shouldBuy(assetName, amountBought, riskManagementPrice, totalCapital):
-    prices = get105prices(assetName)
+def shouldBuy(asset, amountBought, riskManagementPrice, totalCapital):
+    prices = get105prices(asset)
     gold = recentGoldenCross(prices)
 
     capitalRisked, riskManaged = percentRisk(amountBought, prices[0], riskManagementPrice, totalCapital)
@@ -129,3 +129,46 @@ def shouldBuy(assetName, amountBought, riskManagementPrice, totalCapital):
     else:
         return "This may not be a good choice to buy."
 
+# Helper method for anaylzePortfolio that populates the string with all of the risky assets included
+# in the given list and returns the populated string
+def populateStringWithRisks(string, riskyAssets):
+    for assetDetails in riskyAssets:
+        assetName = assetDetails[0]
+        capitalRisked = assetDetails[1]
+        riskManaged = assetDetails[2]
+
+        if capitalRisked > 0.01 and riskManaged:
+            string += "You have done a good job hedging your position on {name}. However, note that you are risking {risked} \
+                       percent of your capital, which is more than advisable.\n".format(name = assetName, risked = capitalRisked * 100)
+        elif capitalRisked <= 0.01 and not riskManaged:
+            string += "Good job not risking too much of your capital on {name}. However, consider using a hedging your \
+                position through downside puts or stop-loss points.\n".format(name = assetName)
+        elif capitalRisked > 0.01 and not riskManaged:
+            string += "You are risking {risked} percent of your capital on {name}, which is more than advisable. \
+                       If you hedge your position through downside puts or stop-loss points, you can lower the capital \
+                       that you risk.\n".format(risked = capitalRisked * 100, name = assetName)
+    return string
+
+# analyzes the given portfolio with unused capital and some (2 or 3) of the five basic rules of risk management
+def analyzePortfolio(portfolio, totalCapital):
+    investedCapital = calcInvestedCapital(portfolio)
+    unusedCapital = totalCapital - investedCapital
+
+    riskyAssets = []
+    risks = onePercentRule(portfolio, totalCapital)
+    for assetID in keyset(risks):
+        capitalRisked, riskManaged = risks[assetID]
+        if capitalRisked > 0.01 or not riskManaged:
+            riskyAssets.append(assetID[0], capitalRisked, riskManaged)
+
+    if unusedCapital > 0:
+        returnString = "Looks like you have some capital that you aren't using. Ask me about buying certain stocks.\n"
+    else:
+        returnString = "Good job utilizing all of your capital!\n"
+
+    if len(riskyAssets) == 0:
+        returnString += "It also looks like you have mitigated much of your risks. Great job!"
+    else:
+        returnString = populateStringWithRisks(returnString, riskyAssets)
+
+    return returnString
