@@ -1,4 +1,4 @@
--- schema.cql
+-- schema.sql
 -- Drop tables if already exists
 DROP TABLE IF EXISTS "pkid";
 DROP TABLE IF EXISTS "user";
@@ -14,7 +14,8 @@ CREATE TABLE "pkid" (
 CREATE TABLE "user" (
     "id" INT PRIMARY KEY,
     "uid" VARCHAR,
-    "email" VARCHAR
+    "email" VARCHAR,
+    "capital" FLOAT
 );
 
 CREATE TABLE "asset" (

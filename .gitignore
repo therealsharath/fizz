@@ -2,3 +2,4 @@
 __pycache__/
 
 backend/db/secure-connect-hackgt-7.zip
+backend/src/hackgt7-google.json
