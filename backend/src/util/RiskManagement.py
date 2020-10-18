@@ -2,6 +2,7 @@
 # RiskManagement.py
 
 from StockPrices import get105prices
+from AnalystRecommendations import getRecommendations
 
 
 # totalCapital - total amount the user has to invest
@@ -10,6 +11,9 @@ from StockPrices import get105prices
 # portfolio - maps asset, date bought pairs to the number bought, price when bought, stop loss value
 #             or strike price of downside put, and industry
 # portfolio example: portfolio[(asset, date)] = (number bought, price when bought, lowest loss price, industry)
+
+################################################################################
+# Calculate risk management basics (for portfolio analysis)
 
 # finds the total invested capital from the portfolio values
 # assetID parameter here is an asset name, date bought tuple
@@ -48,7 +52,7 @@ def diverse(portfolio):
 
 
 ################################################################################
-# Calculate moving averages and crossings
+# Calculate moving averages and crossings (for buy/sell analysis)
 
 # Calculates the 20-day moving average. Need the asset price data for the past
 # twenty days
@@ -88,6 +92,18 @@ def recentDeathCross(prices):
 
     return currUnder and pastOver
 
+#
+def calcBuySellOpinions(buySellIndex):
+    if buySellIndex < -0.6:
+        return "sell, sell, sell!"
+    elif buySellIndex < -0.2:
+        return "sell, but maybe hold."
+    elif buySellIndex < 0.2:
+        return "hold."
+    elif buySellIndex < 0.6:
+        return "buy, but maybe hold."
+    else:
+        return "buy, buy, buy!"
 
 
 ################################################################################
@@ -98,36 +114,88 @@ def recentDeathCross(prices):
 def shouldSell(asset):
     prices = get105prices(asset)
     death = recentDeathCross(prices)
+    buySellIndex = getRecommendations(asset)
+    recommend = calcBuySellOpinions(buySellIndex)
     # diversify???
 
-    if death:
-        return "This sounds like a good choice to sell, since the asset seems to have taken a downward trend."
+    if death
+        if buySellIndex < -0.2:
+            return "{name} sounds like a good choice to sell, since the asset seems to have taken a downward trend. \
+                    Experts also say to {opinion}".format(name = asset, opinion = recommend)
+        elif buySellIndex < 0.2:
+            return "{name} sounds like a good choice to sell, since the asset seems to have taken a downward trend. \
+                    However, experts are saying that you should \
+                    {opinion}".format(name = asset, opinion = recommend)
+        else:
+            return "Our algorithm determines that {name} may be a good choice to sell, since the asset seems to have \
+                    taken a downward trend. However, experts are saying not to sell. I advise that you do some \
+                    additional research into this.".format(name = asset)
     else:
-        return "There is not enough information to know whether or not to sell right now."
+        if buySellIndex > 0.2:
+            return "Taking into account our algorithm and the opinions of experts, \
+                    it seems that you should not sell {name}".format(name = asset)
+        elif buySellIndex > -0.2:
+            return "According to our algorithm and the recommendations of experts, it seems best to \
+                    {opinion}".format(opinion = recommend)
+        else:
+            return "Our algorithm does not see a clear reason to sell, but experts say that you should {opinion} \
+                    I advise that you do some additional research.".format(opinion = recommend)
 
 # takes in the user's inputs on the chatbot as well as the user's total capital to understand if
 # buying the particular asset is a good idea
 def shouldBuy(asset, amountBought, riskManagementPrice, totalCapital):
     prices = get105prices(asset)
     gold = recentGoldenCross(prices)
+    buySellIndex = getRecommendations(asset)
+    recommend = calcBuySellOpinions(buySellIndex)
 
     capitalRisked, riskManaged = percentRisk(amountBought, prices[0], riskManagementPrice, totalCapital)
 
-    if gold and capitalRisked <= 0.01 and riskManaged:
-        return "This sounds like a great choice to buy. Good job on managing your risks as well!"
-    elif gold and capitalRisked <= 0.01 and not riskManaged:
-        return "This sounds like a great choice to buy. Consider using a hedging your position through \
-                downside puts or stop-loss points."
-    elif gold and capitalRisked > 0.01 and riskManaged:
-        return "This sounds like a great choice to buy. However, note that you are risking more capital than advisable."
-    elif gold and capitalRisked > 0.01 and not riskManaged:
-        return "This sounds like a great choice to buy. However, note that you are risking more capital than advisable. \
-                If you hedge your position through downside puts or stop-loss points, you can lower the capital that you risk."
-    elif not gold and capitalRisked <= 0.01 and riskManaged:
-        return "This may not be a good choice to buy. However, you have managed your risks well. Please do more research \
-                to figure out if buying this asset is worth it."
+    returnString = ""
+
+    if gold:
+        returnString = "Our algorithm determined that {name} is a good choice to buy, since the asset seems to \
+                        have taken an upward trend. ".format(name = asset)
+
+        if buySellIndex < -0.2:
+            returnString += "However, experts are saying not to buy {name}. So I advise that you do some \
+                             more research into this.".format(name = asset)
+        elif buySellIndex < 0.2:
+            returnString += "Experts note that you should be more cautious, and hold."
+        else:
+            returnString += "Experts agree that you should {opinion}".format(opinion = recommend)
+
+        if capitalRisked <= 0.01 and riskManaged:
+            returnString += " Good job on managing your risks as well!"
+        if capitalRisked <= 0.01 and not riskManaged:
+            returnString += " Consider hedging your position through downside puts or stop-loss points."
+        if capitalRisked > 0.01 and riskManaged:
+            returnString += " Note that you are risking {risked} percent of your capital, which is more than \
+                             advisable.".format(risked = capitalRisked * 100)
+        if capitalRisked > 0.01 and not riskManaged:
+            returnString += " However, you are risking {risked} percent of your capital, which is more than advisable. \
+                             If you hedge your position through downside puts or stop-loss points, you can lower the \
+                             capital that you risk.".format(risked = capitalRisked * 100)
     else:
-        return "This may not be a good choice to buy."
+        if buySellIndex > 0.2:
+            returnString =  "Our algorithm does not see a clear reason to buy, but experts say that you should {opinion} \
+                             I advise that you do some additional research.".format(opinion = recommend)
+        else:
+            returnString = "Taking into account our algorithm and the recommendations of experts, we would advise \
+                            you not to buy {name}".format(name = asset)
+
+        if capitalRisked <= 0.01 and riskManaged:
+            returnString += " Regardless, good job on managing your risks as well!"
+        if capitalRisked <= 0.01 and not riskManaged:
+            returnString += " Regardless, consider hedging your position through downside puts or stop-loss points."
+        if capitalRisked > 0.01 and riskManaged:
+            returnString += " However, note that you are risking {risked} percent of your capital, which is more than \
+                             advisable.".format(risked = capitalRisked * 100)
+        if capitalRisked > 0.01 and not riskManaged:
+            returnString += " However, you are risking {risked} percent of your capital, which is more than advisable. \
+                             If you hedge your position through downside puts or stop-loss points, you can lower the \
+                             capital that you risk.".format(risked = capitalRisked * 100)
+    return returnString
 
 # Helper method for anaylzePortfolio that populates the string with all of the risky assets included
 # in the given list and returns the populated string
