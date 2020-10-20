@@ -1,29 +1,29 @@
 {
   "files": {
-    "main.css": "/hackgt7/static/css/main.7c97f3df.chunk.css",
-    "main.js": "/hackgt7/static/js/main.4052266f.chunk.js",
-    "main.js.map": "/hackgt7/static/js/main.4052266f.chunk.js.map",
-    "runtime-main.js": "/hackgt7/static/js/runtime-main.837eaa26.js",
-    "runtime-main.js.map": "/hackgt7/static/js/runtime-main.837eaa26.js.map",
-    "static/css/2.e6ac38db.chunk.css": "/hackgt7/static/css/2.e6ac38db.chunk.css",
-    "static/js/2.7aa87ec0.chunk.js": "/hackgt7/static/js/2.7aa87ec0.chunk.js",
-    "static/js/2.7aa87ec0.chunk.js.map": "/hackgt7/static/js/2.7aa87ec0.chunk.js.map",
-    "index.html": "/hackgt7/index.html",
-    "precache-manifest.60b60d42e9666e7d4f9365df72b9f7a0.js": "/hackgt7/precache-manifest.60b60d42e9666e7d4f9365df72b9f7a0.js",
-    "service-worker.js": "/hackgt7/service-worker.js",
-    "static/css/2.e6ac38db.chunk.css.map": "/hackgt7/static/css/2.e6ac38db.chunk.css.map",
-    "static/css/main.7c97f3df.chunk.css.map": "/hackgt7/static/css/main.7c97f3df.chunk.css.map",
-    "static/js/2.7aa87ec0.chunk.js.LICENSE.txt": "/hackgt7/static/js/2.7aa87ec0.chunk.js.LICENSE.txt",
-    "static/media/G.png": "/hackgt7/static/media/G.0b1e5c66.png",
-    "static/media/App.css": "/hackgt7/static/media/login.158baf87.jpg",
-    "static/media/fizzlogo.png": "/hackgt7/static/media/fizzlogo.4b93b019.png",
-    "static/media/stonksuser.png": "/hackgt7/static/media/stonksuser.f21ada93.png"
+    "main.css": "/static/css/main.497684ba.chunk.css",
+    "main.js": "/static/js/main.b5123bc8.chunk.js",
+    "main.js.map": "/static/js/main.b5123bc8.chunk.js.map",
+    "runtime-main.js": "/static/js/runtime-main.c8a21426.js",
+    "runtime-main.js.map": "/static/js/runtime-main.c8a21426.js.map",
+    "static/css/2.e6ac38db.chunk.css": "/static/css/2.e6ac38db.chunk.css",
+    "static/js/2.ba028bae.chunk.js": "/static/js/2.ba028bae.chunk.js",
+    "static/js/2.ba028bae.chunk.js.map": "/static/js/2.ba028bae.chunk.js.map",
+    "index.html": "/index.html",
+    "precache-manifest.ebeac89e10598e27dcaee6c9175fdf88.js": "/precache-manifest.ebeac89e10598e27dcaee6c9175fdf88.js",
+    "service-worker.js": "/service-worker.js",
+    "static/css/2.e6ac38db.chunk.css.map": "/static/css/2.e6ac38db.chunk.css.map",
+    "static/css/main.497684ba.chunk.css.map": "/static/css/main.497684ba.chunk.css.map",
+    "static/js/2.ba028bae.chunk.js.LICENSE.txt": "/static/js/2.ba028bae.chunk.js.LICENSE.txt",
+    "static/media/G.png": "/static/media/G.0b1e5c66.png",
+    "static/media/App.css": "/static/media/login.158baf87.jpg",
+    "static/media/fizzlogo.png": "/static/media/fizzlogo.4b93b019.png",
+    "static/media/stonksuser.png": "/static/media/stonksuser.f21ada93.png"
   },
   "entrypoints": [
-    "static/js/runtime-main.837eaa26.js",
+    "static/js/runtime-main.c8a21426.js",
     "static/css/2.e6ac38db.chunk.css",
-    "static/js/2.7aa87ec0.chunk.js",
-    "static/css/main.7c97f3df.chunk.css",
-    "static/js/main.4052266f.chunk.js"
+    "static/js/2.ba028bae.chunk.js",
+    "static/css/main.497684ba.chunk.css",
+    "static/js/main.b5123bc8.chunk.js"
   ]
 }
