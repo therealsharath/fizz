@@ -1,27 +1,27 @@
 self.__precacheManifest = (self.__precacheManifest || []).concat([
   {
-    "revision": "29d6abfbcdf18b0541e3c17f8b93f14b",
+    "revision": "cd119b07efcb0505d17b8b143cf3d085",
     "url": "/hackgt7/index.html"
   },
   {
-    "revision": "e2e1595eba3b36dd9f53",
-    "url": "/hackgt7/static/css/2.08a81a33.chunk.css"
+    "revision": "bde1f1affd4b2e8e2fc3",
+    "url": "/hackgt7/static/css/2.e6ac38db.chunk.css"
   },
   {
-    "revision": "ada250fa425200d7dc7c",
-    "url": "/hackgt7/static/css/main.95be1305.chunk.css"
+    "revision": "ef97bc74bfcdda9a7930",
+    "url": "/hackgt7/static/css/main.7c97f3df.chunk.css"
   },
   {
-    "revision": "e2e1595eba3b36dd9f53",
-    "url": "/hackgt7/static/js/2.7ebf31b8.chunk.js"
+    "revision": "bde1f1affd4b2e8e2fc3",
+    "url": "/hackgt7/static/js/2.7aa87ec0.chunk.js"
   },
   {
     "revision": "fbb22318fd75e7e20daef4d3f59b1919",
-    "url": "/hackgt7/static/js/2.7ebf31b8.chunk.js.LICENSE.txt"
+    "url": "/hackgt7/static/js/2.7aa87ec0.chunk.js.LICENSE.txt"
   },
   {
-    "revision": "ada250fa425200d7dc7c",
-    "url": "/hackgt7/static/js/main.79a1fe01.chunk.js"
+    "revision": "ef97bc74bfcdda9a7930",
+    "url": "/hackgt7/static/js/main.b5a6319f.chunk.js"
   },
   {
     "revision": "1d310434405bb1bb746c",
@@ -42,5 +42,9 @@ self.__precacheManifest = (self.__precacheManifest || []).concat([
   {
     "revision": "158baf873717334fe9a695e58ee3fcc4",
     "url": "/hackgt7/static/media/login.158baf87.jpg"
+  },
+  {
+    "revision": "f21ada932d728faa2ba3574dd4e45941",
+    "url": "/hackgt7/static/media/stonksuser.f21ada93.png"
   }
 ]);
