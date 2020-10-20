@@ -37,7 +37,7 @@ function SignIn() {
 
 function SignOut() {
     return auth.currentUser && (
-        <button className="nav-button" onClick={() => auth.signOut()}>Sign Out</button>
+        <button className="nav-button" onClick={() => auth.signOut()}>Sign Out </button>
     )
 }
 
@@ -56,7 +56,7 @@ function Authentication(props) {
             });
             var config = {
                 method: 'post',
-                url: 'http://maelstrom.pythonanywhere.com/login',
+                url: 'https://maelstrom.pythonanywhere.com/login',
                 headers: { 
                     'Content-Type': 'application/json'
             },
@@ -90,9 +90,11 @@ function Authentication(props) {
     return(
         !user ? <div className="login-screen login-bg-image">
             <div className="login-box">
-                <img src={fizz} className="main-logo"/>
-                <div className="simply">
-                    <SignIn/>
+                <div className="special">
+                    <img src={fizz} className="main-logo"/>
+                    <div className="simply">
+                        <SignIn/>
+                    </div>
                 </div>
             </div>
         </div> : <SignOut/>

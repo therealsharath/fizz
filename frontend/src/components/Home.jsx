@@ -31,11 +31,11 @@ function Home() {
                         <div className="nav-wrapper">
                             <div className="logo"><img src={fizz} className="logo-image"></img></div>
                             <div className="nav-link" onClick={handleUpload}>Upload</div>
-                            <div className="nav-link" onClick={handleStonks}>Stonks</div>
+                            <div className="nav-link" onClick={handleStonks}>StonkBot</div>
                         </div>
                         <div className="sign-out-nav"><Authentication setIsLogged={setIsLogged} setUser={setUser}/></div>
                     </div>
-                    {isUpload && <Portfolio portfolio={portfolio} setPortfolio={setPortfolio}/>}
+                    {isUpload && <Portfolio user={user} portfolio={portfolio} setPortfolio={setPortfolio}/>}
                     {isStonks && <Chatbot user={user}/>}
                 </div>
             }

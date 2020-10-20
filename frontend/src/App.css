@@ -58,14 +58,9 @@ button:hover {
 
 .login-box {
   background-color: rgb(255, 255, 255, 0.3);
-  min-width: 30vw;
-  min-height: 60vh;
-  display: flex;
-  justify-content: space-around;
-  align-items: center;
+  min-width: 20vw;
+  height: 60vh;
   border-radius: 30px;
-  flex-direction: column;
-  border: 3vw;
 }
 
 .main-logo {
@@ -116,7 +111,8 @@ button:hover {
 }
 
 .logo-image {
-  max-width: 2.5vw;
+  width: 2.5vw;
+  height: 2.5vw;
 }
 
 .nav-wrapper {
@@ -139,7 +135,7 @@ button:hover {
 }
 
 .bot {
-  height: 82vh;
+  height: 81vh;
   background-image: linear-gradient(rgba(0,0,0,0.75), rgba(0,0,0,0.75)),url(./components/images/chat-bg.jpg);
   background-repeat: no-repeat;
   background-position: center;
@@ -165,9 +161,11 @@ button:hover {
   display: flex;
   justify-content: space-around;
   align-items: center;
-  width: 80vw;
+  width: 90vw;
   height: 10vh;
   padding: 2vw;
+  padding-top: 0;
+  padding-left: 0;
 }
 
 input, select {
@@ -250,6 +248,62 @@ input, select {
   color: #999;
 }
 
+.chat-form {
+  display: flex;
+}
+
+.chat-container {
+  padding-right: 1vw;
+  justify-content: center;
+  align-items: center;
+}
+
+.chat-text {
+  min-width: 37.5vw;
+}
+
+.chat-send {
+  height: 3.5vw;
+  width: 3.5vw;
+  border-radius: 360px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.chat-send:hover {
+  cursor: pointer;
+}
+
+.special {
+  padding-bottom: 20vw;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: space-between;
+  height: 56vh;
+}
+
+.portfolio-container {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.add-new {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  padding-left: 4vw;
+}
+
+.main-folio {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 40vh;
+}
 
 @media only screen and (max-width: 600px) {
   .login-box {
