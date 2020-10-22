@@ -34,6 +34,10 @@ def getDataDatePrice(url, date):
         if i['date'] == date:
             price = i['close']
             break
+
+    while price == 0:
+        i -= 1
+        price = data['historical'][i]['close']
     return price
 
 # parses JSON from HTTP GET request to financialmodlingprep API for stock industry
@@ -91,6 +95,25 @@ def getLosers():
 # eg. (gainers, losers)
 def getActives():
     return (getGainers(), getLosers())
+
+# Gets description of asset
+def getDescription(asset):
+    url = 'https://financialmodelingprep.com/api/v3/profile/{asset}?apikey={apikey}'.format(asset=asset, apikey=apikey)
+    response = requests.get(url)
+    json_obj = json.loads(response.text)
+    if not json_obj:
+        return 'There is no known asset with that name.'
+    
+    sentences = json_obj[0]['description'].split('. ')
+    sentence = 0
+    while sentences[sentence + 1][0].islower():
+        sentence += 1
+    return {
+        'description': '. '.join(sentences[:sentence + 1]) + '.',
+        'industry': json_obj[0]['industry'],
+        'sector': json_obj[0]['sector'],
+        'price': json_obj[0]['price']
+    }
 
 # FOR DEBUGGING
 # print(get105prices("AAPL"))
