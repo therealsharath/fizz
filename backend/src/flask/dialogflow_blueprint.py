@@ -6,6 +6,7 @@ import sys
 sys.path.append(os.path.join(os.path.dirname(os.path.dirname(os.path.abspath(__file__))), 'util'))
 from flask import Blueprint, request, jsonify
 from db_assets import aggregate_assets, get_total_capital
+from StockPrices import getActives as getHotAssets, getDescription
 from RiskManagement import shouldBuy, shouldSell, analyzePortfolio
 
 
@@ -58,9 +59,21 @@ def analyze_portfolio(uid=None, **kwargs):
     return analyzePortfolio(portfolio, total_capital)
 
 
+def hot_assets(**kwargs):
+    good_assets = getHotAssets()[0]
+    return 'Based on expert opinions, {stocks} have been doing very well. Some of these assets might be worth a closer look.'.format(stocks=', '.join(good_assets))
+
+
+def what_is_asset(asset=None, **kwargs):
+    return '{description} {asset} is in the {industry} Industry of the {sector} Sector. {asset} is currently valued at ${price}.'.format(asset=asset, **getDescription(asset))
+
+
+
 # Dialogflow intents
 intents = {
     'BUY_ASSET': buy_asset,
     'SELL_ASSET': sell_asset,
-    'ANALYZE_PORTFOLIO': analyze_portfolio
+    'ANALYZE_PORTFOLIO': analyze_portfolio,
+    'HOT_ASSETS': hot_assets,
+    'WHAT_IS_ASSET': what_is_asset
 }

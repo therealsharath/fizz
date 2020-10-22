@@ -46,18 +46,17 @@ def post_portfolio_upload():
     cluster = Cluster(cloud={'secure_connect_bundle': DB_BUNDLE_LOCATION}, auth_provider=auth_provider)
     conn = cluster.connect()
     conn.execute('USE maelstrom;')
-    #conn.execute('DELETE FROM "asset" WHERE "uid" = \'{uid}\';'.format(uid=uid))
+    
+    delete_ids = [str(x[0]) for x in conn.execute('SELECT "id" FROM "asset" WHERE "uid" = \'{uid}\' ALLOW FILTERING;'.format(uid=uid))]
+    conn.execute('DELETE FROM "asset" WHERE "id" IN ({ids});'.format(ids=', '.join(delete_ids)))
 
     id = conn.execute('SELECT "id" FROM "pkid" WHERE "label" = \'asset\';').one()[0]
     c = 0
-    query = 'INSERT INTO "asset" ("id", "uid", "label", "quantity", "bought", "price", "slp") VALUES '
     for asset in portfolio:
         date = datetime.strptime(asset['date'][:15], '%a %b %d %Y').strftime('%Y-%m-%d')
         price = getDatePrice(asset['ticker'], date)
-        query += '({id}, \'{uid}\', \'{label}\', {quantity}, \'{bought}\', {price}, {slp}), '.format(id=id + c, uid=uid, label=asset['ticker'], quantity=asset['quantity'], bought=date, price=price, slp=asset['slp'])
+        conn.execute('INSERT INTO "asset" ("id", "uid", "label", "quantity", "bought", "price", "slp") VALUES ({id}, \'{uid}\', \'{label}\', {quantity}, \'{bought}\', {price}, {slp});'.format(id=id + c, uid=uid, label=asset['ticker'], quantity=asset['quantity'], bought=date, price=price, slp=asset['slp']))
         c += 1
-    query = query[:-2] + ';'
-    conn.execute(query)
     conn.execute('UPDATE "pkid" SET "id" = "id" + {c} WHERE "label" = \'asset\';'.format(c=c))
     conn.shutdown()
     return jsonify({'success': True, 'authenticate': True}), 200
