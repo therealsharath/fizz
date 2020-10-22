@@ -43,15 +43,15 @@ function StockField(props) {
             <div className="form-item">
                 <label className="label">Date Purchased</label>
                 <Controller
-                    as={ReactDatePicker}
                     control={control}
-                    valueName={selected.getDate()} // DateSelect value's name is selected
-                    onChange={(chosen) => setSelected(chosen)}
+                    as={ReactDatePicker}
+                    valueName={selected} // DateSelect value's name is selected
+                    onChange={([selected]) => setSelected(selected)}
                     name="date"
-                    className="input"
-                    placeholderText="Select date"
+                    placeholderText={selected}
                     dateFormat="yyyy/MM/dd"
                     maxDate={new Date()}
+                    dateFormat="d MMM yyyy"
                 />
             </div>
 
