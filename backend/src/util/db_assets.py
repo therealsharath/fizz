@@ -25,7 +25,7 @@ SELECT "label",
        "price",
        "slp"
   FROM "asset"
- WHERE "uid" = \'{uid}\';
+ WHERE "uid" = \'{uid}\' ALLOW FILTERING;
 '''.format(uid=uid)
     assets = conn.execute(query)
     conn.shutdown()
@@ -52,8 +52,7 @@ def get_total_capital(uid):
     query = '''
 SELECT "capital"
   FROM "user"
- WHERE "uid" = \'{uid}\'
-'''.format(uid=uid)
+ WHERE "uid" = \'{uid}\' ALLOW FILTERING;'''.format(uid=uid)
     capital = conn.execute(query).one()
     conn.shutdown()
     if capital:

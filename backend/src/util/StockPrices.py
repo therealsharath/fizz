@@ -7,6 +7,7 @@ sys.path.append(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 import json
 import requests
 from config import FMP_API_KEY as apikey
+from AnalystRecommendations import getRecommendations
 
 # parses JSON from HTTP GET request to financialmodlingprep API
 def parseJSON(url):
@@ -30,10 +31,14 @@ def getData105(url):
 def getDataDatePrice(url, date):
     data = parseJSON(url)
     price = 0
-    for i in data['historical']:
-        if i['date'] == date:
-            price = i['close']
+    for i in range(len(data['historical'])):
+        if data['historical'][i]['date'] == date:
+            price = data['historical'][i]['close']
             break
+
+    while price == 0:
+        i -= 1
+        price = data['historical'][i]['close']
     return price
 
 # parses JSON from HTTP GET request to financialmodlingprep API for stock industry
@@ -59,6 +64,14 @@ def getDataActiveStocks(url):
 ########################################################################
 # CALL THE BELOW FUNCTIONS!!! #
 ########################################################################
+
+# checking whether or not asset exists
+def assetExists(ticker):
+    try:
+        getRecommendations(ticker)
+    except:
+        return False
+    return True
 
 # returns list of last 105 closing prices of specified stock
 def get105prices(ticker):
@@ -92,8 +105,27 @@ def getLosers():
 def getActives():
     return (getGainers(), getLosers())
 
+# Gets description of asset
+def getDescription(asset):
+    url = 'https://financialmodelingprep.com/api/v3/profile/{asset}?apikey={apikey}'.format(asset=asset, apikey=apikey)
+    response = requests.get(url)
+    json_obj = json.loads(response.text)
+    if not json_obj:
+        return 'There is no known asset with that name.'
+
+    sentences = json_obj[0]['description'].split('. ')
+    sentence = 0
+    while sentences[sentence + 1][0].islower():
+        sentence += 1
+    return {
+        'description': '. '.join(sentences[:sentence + 1]) + '.',
+        'industry': json_obj[0]['industry'],
+        'sector': json_obj[0]['sector'],
+        'price': json_obj[0]['price']
+    }
+
 # FOR DEBUGGING
 # print(get105prices("AAPL"))
 # print(getDatePrice("AAPL", "2020-09-14")) # should return $115.36
-# print(getIndustry("AAPL"))
+# print(assetExists("GOOGLSDFKASJDKFJ"))
 # print(getActives())
