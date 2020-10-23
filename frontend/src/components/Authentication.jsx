@@ -47,7 +47,7 @@ function Authentication(props) {
 
     const [isLogged, setIsLogged] = useState(false);
     const [dataSent, setDataSent] = useState(false);
-
+    
     useEffect(() => {
         async function sendUserData(){
             var data = JSON.stringify({
