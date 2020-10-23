@@ -7,6 +7,7 @@ sys.path.append(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 import json
 import requests
 from config import FMP_API_KEY as apikey
+from AnalystRecommendations import getRecommendations
 
 # parses JSON from HTTP GET request to financialmodlingprep API
 def parseJSON(url):
@@ -64,6 +65,14 @@ def getDataActiveStocks(url):
 # CALL THE BELOW FUNCTIONS!!! #
 ########################################################################
 
+# checking whether or not asset exists
+def assetExists(ticker):
+    try:
+        getRecommendations(ticker)
+    except:
+        return False
+    return True
+
 # returns list of last 105 closing prices of specified stock
 def get105prices(ticker):
     url = ("https://financialmodelingprep.com/api/v3/historical-price-full/" + ticker + "?apikey=" + apikey)
@@ -103,7 +112,7 @@ def getDescription(asset):
     json_obj = json.loads(response.text)
     if not json_obj:
         return 'There is no known asset with that name.'
-    
+
     sentences = json_obj[0]['description'].split('. ')
     sentence = 0
     while sentences[sentence + 1][0].islower():
@@ -118,5 +127,5 @@ def getDescription(asset):
 # FOR DEBUGGING
 # print(get105prices("AAPL"))
 # print(getDatePrice("AAPL", "2020-09-14")) # should return $115.36
-# print(getIndustry("AAPL"))
+# print(assetExists("GOOGLSDFKASJDKFJ"))
 # print(getActives())
