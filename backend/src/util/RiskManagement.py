@@ -204,7 +204,7 @@ capital that you risk.".format(risked = round(capitalRisked * 100, 2))
 I advise that you do some additional research. ".format(opinion = recommend)
         else:
             returnString = "Taking into account our algorithm and the recommendations of experts, we would advise \
-you not to buy {name}. ".format(name = asset)
+you not to buy {name} right now. ".format(name = asset)
 
         if capitalRisked <= 0.01 and riskManaged:
             returnString += "Regardless, good job on managing your risks as well!"
