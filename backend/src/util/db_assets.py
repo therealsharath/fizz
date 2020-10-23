@@ -57,7 +57,7 @@ def get_total_capital(uid):
 SELECT capital
   FROM user
  WHERE uid = \'{uid}\';'''.format(uid=uid))
-    capital = cursor.fetchone()
+    capital = cursor.fetchone()[0]
     cursor.close()
     conn.close()
     if capital:
