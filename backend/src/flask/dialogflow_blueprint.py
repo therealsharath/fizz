@@ -6,7 +6,7 @@ import sys
 sys.path.append(os.path.join(os.path.dirname(os.path.dirname(os.path.abspath(__file__))), 'util'))
 from flask import Blueprint, request, jsonify
 from db_assets import aggregate_assets, get_total_capital
-from StockPrices import getActives as getHotAssets, getDescription
+from StockPrices import getActives as getHotAssets, getDescription, assetExists
 from RiskManagement import shouldBuy, shouldSell, analyzePortfolio
 
 
@@ -41,6 +41,8 @@ def get_all_intents():
 # Intent functions
 def buy_asset(uid=None, asset=None, quantity=None, risk_management_price=None, **kwargs):
     total_capital = get_total_capital(uid)
+    if not assetExists(asset):
+        return 'Sorry, but {asset} is not a valid ticker.'
 
     # Should I buy this asset? - Inputs: asset, quantity, risk price (stop loss)
     return shouldBuy(asset, quantity, risk_management_price, total_capital)
