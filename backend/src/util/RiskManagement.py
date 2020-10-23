@@ -185,7 +185,7 @@ more research into this. ".format(name = asset)
         else:
             returnString += "Experts agree that you should {opinion} ".format(opinion = recommend)
 
-        returnString += "Our algorithm has also decided that buying {name} is {risk}. ".format(name = asset, risk = possibleRisk)
+        returnString += "Our algorithm has also decided that buying {name} is {risk}. ".format(name = asset, risk = round(possibleRisk * 100, 2))
 
         if capitalRisked <= 0.01 and riskManaged:
             returnString += "Regardless, good job on managing your risks as well!"
@@ -193,11 +193,11 @@ more research into this. ".format(name = asset)
             returnString += "Regardless, consider hedging your position through downside puts or stop-loss points."
         elif capitalRisked > 0.01 and riskManaged:
             returnString += "However, you are risking {risked} percent of your capital, which is more than \
-advisable.".format(risked = capitalRisked * 100)
+advisable.".format(risked = round(capitalRisked * 100, 2))
         elif capitalRisked > 0.01 and not riskManaged:
             returnString += "However, you are risking {risked} percent of your capital, which is more than advisable. \
 If you hedge your position through downside puts or stop-loss points, you can lower the \
-capital that you risk.".format(risked = capitalRisked * 100)
+capital that you risk.".format(risked = round(capitalRisked * 100, 2))
     else:
         if buySellIndex >= 0.6:
             returnString =  "Our algorithm does not see a clear reason to buy, but experts say that you should {opinion} \
@@ -212,11 +212,11 @@ you not to buy {name}. ".format(name = asset)
             returnString += "Regardless, consider hedging your position through downside puts or stop-loss points."
         elif capitalRisked > 0.01 and riskManaged:
             returnString += "However, note that you are risking {risked} percent of your capital, which is more than \
-advisable.".format(risked = capitalRisked * 100)
+advisable.".format(risked = round(capitalRisked * 100, 2))
         elif capitalRisked > 0.01 and not riskManaged:
             returnString += "However, you are risking {risked} percent of your capital, which is more than advisable. \
 If you hedge your position through downside puts or stop-loss points, you can lower the \
-capital that you risk.".format(risked = capitalRisked * 100)
+capital that you risk.".format(risked = round(capitalRisked * 100, 2))
     return returnString
 
 # Helper method for anaylzePortfolio that populates the string with all of the risky assets included
