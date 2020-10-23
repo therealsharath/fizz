@@ -10,7 +10,7 @@ function Chatbot(props) {
     const [messageBoard, setMessageBoard] = useState([
         ['bot', 'Hey there! I’m Fizz, your personal financial consultant!'], 
         ['bot', 'I can help you with some of the following: analyzing your current portfolio, providing you with suggestions about the stocks you may want to transact, and even recommending potential assets to invest in!'],
-        ['bot', 'Ask me what is AMZN??!'],
+        ['bot', 'For example, get started by asking me "What is AMZN??!"'],
     ])
     
     const sendMessage = (message) => {

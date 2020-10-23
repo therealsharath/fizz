@@ -2,7 +2,7 @@ import React from 'react';
 import { useEffect, useState } from 'react';
 import axios from 'axios';
 import gImg from './images/G.png';
-import fizz from './images/fizzlogo.png';
+import fizz from './images/fizzstart.png';
 
 import firebase from 'firebase/app';
 import 'firebase/firestore';
