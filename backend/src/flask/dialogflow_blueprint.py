@@ -42,13 +42,16 @@ def get_all_intents():
 def buy_asset(uid=None, asset=None, quantity=None, risk_management_price=None, **kwargs):
     total_capital = get_total_capital(uid)
     if not assetExists(asset):
-        return 'Sorry, but {asset} is not a valid ticker.'
+        return 'Sorry, but {asset} is not a valid ticker.'.format(asset=asset)
 
     # Should I buy this asset? - Inputs: asset, quantity, risk price (stop loss)
     return shouldBuy(asset, quantity, risk_management_price, total_capital)
 
 
 def sell_asset(asset=None, **kwargs):
+    if not assetExists(asset):
+        return 'Sorry, but {asset} is not a valid ticker.'.format(asset=asset)
+
     # Should I sell this asset? - Inputs: asset
     return shouldSell(asset)
 
@@ -67,6 +70,8 @@ def hot_assets(**kwargs):
 
 
 def what_is_asset(asset=None, **kwargs):
+    if not assetExists(asset):
+        return 'Sorry, but {asset} is not a valid ticker.'.format(asset=asset)
     return '{description} {asset} is in the {industry} Industry of the {sector} Sector. {asset} is currently valued at ${price}.'.format(asset=asset, **getDescription(asset))
 
 
