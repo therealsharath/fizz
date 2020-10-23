@@ -9,7 +9,7 @@ import MySQLdb
 from datetime import datetime
 from flask import Blueprint, request, jsonify
 from auth import authenticate
-from StockPrices import getDatePrice
+from StockPrices import getDatePrice, assetExists
 from config import DB_USERNAME, DB_PASSWORD, DB_HOST, DB_NAME
 
 
@@ -85,6 +85,8 @@ INSERT INTO asset
      VALUES '''
 
     for asset in portfolio:
+        if not assetExists(asset['ticker']):
+            continue
         date = datetime.strptime(asset['date'][:15], '%a %b %d %Y').strftime('%Y-%m-%d')
         price = getDatePrice(asset['ticker'], date)
         query += '(\'{uid}\', \'{label}\', {quantity}, \'{bought}\', {price}, {slp}), '.format(uid=uid, label=asset['ticker'].upper(), quantity=asset['quantity'], bought=date, price=price, slp=asset['slp'])

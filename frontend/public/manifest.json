@@ -1,6 +1,6 @@
 {
-  "short_name": "React App",
-  "name": "Create React App Sample",
+  "short_name": "Fizz",
+  "name": "Your personal financial advisor",
   "icons": [
     {
       "src": "fizzlogo.png",
