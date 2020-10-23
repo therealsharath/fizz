@@ -30,9 +30,9 @@ def getData105(url):
 def getDataDatePrice(url, date):
     data = parseJSON(url)
     price = 0
-    for i in data['historical']:
-        if i['date'] == date:
-            price = i['close']
+    for i in range(len(data['historical'])):
+        if data['historical'][i]['date'] == date:
+            price = data['historical'][i]['close']
             break
 
     while price == 0:
