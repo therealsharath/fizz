@@ -1,27 +1,27 @@
 self.__precacheManifest = (self.__precacheManifest || []).concat([
   {
-    "revision": "5f463b1ebc70f2441590ae1453fdfb6e",
+    "revision": "a3e4533c1e5be9777533b30b4aaf2c5a",
     "url": "/index.html"
   },
   {
-    "revision": "7855a6554855b7d2d8c0",
+    "revision": "ff7d3fcbebf0753b37d6",
     "url": "/static/css/2.e6ac38db.chunk.css"
   },
   {
-    "revision": "6f13b76f1666f66b9527",
-    "url": "/static/css/main.497684ba.chunk.css"
+    "revision": "ed272fbd19583a82c467",
+    "url": "/static/css/main.89c3763e.chunk.css"
   },
   {
-    "revision": "7855a6554855b7d2d8c0",
-    "url": "/static/js/2.ba028bae.chunk.js"
+    "revision": "ff7d3fcbebf0753b37d6",
+    "url": "/static/js/2.cbdcb1a1.chunk.js"
   },
   {
     "revision": "fbb22318fd75e7e20daef4d3f59b1919",
-    "url": "/static/js/2.ba028bae.chunk.js.LICENSE.txt"
+    "url": "/static/js/2.cbdcb1a1.chunk.js.LICENSE.txt"
   },
   {
-    "revision": "6f13b76f1666f66b9527",
-    "url": "/static/js/main.b5123bc8.chunk.js"
+    "revision": "ed272fbd19583a82c467",
+    "url": "/static/js/main.3fd4e8ee.chunk.js"
   },
   {
     "revision": "2747b914e9a60db2276f",
@@ -38,6 +38,10 @@ self.__precacheManifest = (self.__precacheManifest || []).concat([
   {
     "revision": "4b93b0198baa8d1828e916f0a85ef1a8",
     "url": "/static/media/fizzlogo.4b93b019.png"
+  },
+  {
+    "revision": "6e8265f16683354b1c89ba2da44f8da7",
+    "url": "/static/media/fizzstart.6e8265f1.png"
   },
   {
     "revision": "158baf873717334fe9a695e58ee3fcc4",
