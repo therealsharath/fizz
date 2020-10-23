@@ -5,13 +5,12 @@ import os
 import sys
 sys.path.append(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 sys.path.append(os.path.join(os.path.dirname(os.path.dirname(os.path.abspath(__file__))), 'util'))
+import MySQLdb
 from datetime import datetime
 from flask import Blueprint, request, jsonify
-from cassandra.cluster import Cluster
-from cassandra.auth import PlainTextAuthProvider
 from auth import authenticate
 from StockPrices import getDatePrice
-from config import DB_USERNAME, DB_PASSWORD, DB_BUNDLE_LOCATION
+from config import DB_USERNAME, DB_PASSWORD, DB_HOST, DB_NAME
 
 
 login_blueprint = Blueprint('login_blueprint', __name__, template_folder=os.path.join(os.path.dirname(os.path.dirname(os.path.abspath(__file__))), 'templates'), static_folder=os.path.join(os.path.dirname(os.path.dirname(os.path.abspath(__file__))), 'static'))
@@ -23,40 +22,76 @@ def post_login():
     uid = request.get_json(force=True).get('userId')
     email = request.get_json(force=True).get('userEmail')
 
-    auth_provider = PlainTextAuthProvider(DB_USERNAME, DB_PASSWORD)
-    cluster = Cluster(cloud={'secure_connect_bundle': DB_BUNDLE_LOCATION}, auth_provider=auth_provider)
-    conn = cluster.connect()
-    conn.execute('USE maelstrom;')
-    user = conn.execute('SELECT "uid", "email" FROM "user" WHERE "uid" = \'{uid}\' AND "email" = \'{email}\' ALLOW FILTERING;'.format(uid=uid, email=email)).one()
-    if not user:
-        user_pkid = conn.execute('SELECT "id" FROM "pkid" WHERE "label" = \'user\';').one()[0]
-        conn.execute('UPDATE "pkid" SET "id" = "id" + 1 WHERE "label" = \'user\';')
-        conn.execute('INSERT INTO "user" ("id", "uid", "email", "capital") VALUES ({user_pkid}, \'{uid}\', \'{email}\', {capital});'.format(user_pkid=user_pkid, uid=uid, email=email, capital=500000))
-    conn.shutdown()
+    conn = MySQLdb.connect(
+        host=DB_HOST,
+        user=DB_USERNAME,
+        passwd=DB_PASSWORD,
+        db=DB_NAME
+    )
+    cursor = conn.cursor()
+    if cursor.execute('''
+SELECT uid,
+       email
+  FROM user
+ WHERE uid = \'{uid}\'
+   AND email = \'{email}\';'''.format(uid=uid, email=email)) == 0:
+        cursor.execute('''
+INSERT INTO user
+            (
+                uid,
+                email
+            )
+     VALUES (
+                \'{uid}\',
+                \'{email}\'
+            );
+'''.format(uid=uid, email=email))
+        conn.commit()
+    cursor.close()
+    conn.close()
     return jsonify({'success': True, 'authenticated': True}), 200
 
 
 # Upload portfolio
 @login_blueprint.route('/portfolio/upload', methods=['POST'])
+@authenticate
 def post_portfolio_upload():
     uid = request.get_json(force=True).get('userId')
     portfolio = request.get_json(force=True).get('portfolio')
 
-    auth_provider = PlainTextAuthProvider(DB_USERNAME, DB_PASSWORD)
-    cluster = Cluster(cloud={'secure_connect_bundle': DB_BUNDLE_LOCATION}, auth_provider=auth_provider)
-    conn = cluster.connect()
-    conn.execute('USE maelstrom;')
-    
-    delete_ids = [str(x[0]) for x in conn.execute('SELECT "id" FROM "asset" WHERE "uid" = \'{uid}\' ALLOW FILTERING;'.format(uid=uid))]
-    conn.execute('DELETE FROM "asset" WHERE "id" IN ({ids});'.format(ids=', '.join(delete_ids)))
+    conn = MySQLdb.connect(
+        host=DB_HOST,
+        user=DB_USERNAME,
+        passwd=DB_PASSWORD,
+        db=DB_NAME
+    )
+    cursor = conn.cursor()
 
-    id = conn.execute('SELECT "id" FROM "pkid" WHERE "label" = \'asset\';').one()[0]
-    c = 0
+    cursor.execute('''
+DELETE FROM asset
+      WHERE uid = \'{uid}\';
+'''.format(uid=uid))
+
+    query = '''
+INSERT INTO asset
+            (
+                uid,
+                label,
+                quantity,
+                bought,
+                price,
+                slp
+            )
+     VALUES '''
+
     for asset in portfolio:
         date = datetime.strptime(asset['date'][:15], '%a %b %d %Y').strftime('%Y-%m-%d')
         price = getDatePrice(asset['ticker'], date)
-        conn.execute('INSERT INTO "asset" ("id", "uid", "label", "quantity", "bought", "price", "slp") VALUES ({id}, \'{uid}\', \'{label}\', {quantity}, \'{bought}\', {price}, {slp});'.format(id=id + c, uid=uid, label=asset['ticker'], quantity=asset['quantity'], bought=date, price=price, slp=asset['slp']))
-        c += 1
-    conn.execute('UPDATE "pkid" SET "id" = "id" + {c} WHERE "label" = \'asset\';'.format(c=c))
-    conn.shutdown()
+        query += '(\'{uid}\', \'{label}\', {quantity}, \'{bought}\', {price}, {slp}), '.format(uid=uid, label=asset['ticker'].upper(), quantity=asset['quantity'], bought=date, price=price, slp=asset['slp'])
+    query = query[:-2] + ';'
+    cursor.execute(query)
+    conn.commit()
+
+    cursor.close()
+    conn.close()
     return jsonify({'success': True, 'authenticate': True}), 200

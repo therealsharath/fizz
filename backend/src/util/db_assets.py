@@ -4,31 +4,33 @@
 import os
 import sys
 sys.path.append(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
-from cassandra.cluster import Cluster
-from cassandra.auth import PlainTextAuthProvider
-from config import DB_USERNAME, DB_PASSWORD, DB_BUNDLE_LOCATION
+import MySQLdb
+from config import DB_USERNAME, DB_PASSWORD, DB_HOST, DB_NAME
 
 
 # Aggregates current asset data for a specific portfolio (user) into a mapping
 # ignore_dates=True sets the mapping from asset to quantity
 # ignore_dates=False sets the mapping from asset/date bought to quantity
 def aggregate_assets(uid, ignore_dates=False):
-    auth_provider = PlainTextAuthProvider(DB_USERNAME, DB_PASSWORD)
-    cluster = Cluster(cloud={'secure_connect_bundle': DB_BUNDLE_LOCATION}, auth_provider=auth_provider)
-    conn = cluster.connect()
-    conn.execute('USE maelstrom;')
+    conn = MySQLdb.connect(
+        host=DB_HOST,
+        user=DB_USERNAME,
+        passwd=DB_PASSWORD,
+        db=DB_NAME
+    )
+    cursor = conn.cursor()
 
-    query = '''
-SELECT "label",
-       "quantity",
-       "bought",
-       "price",
-       "slp"
-  FROM "asset"
- WHERE "uid" = \'{uid}\' ALLOW FILTERING;
-'''.format(uid=uid)
-    assets = conn.execute(query)
-    conn.shutdown()
+    cursor.execute('''
+SELECT label,
+       quantity,
+       bought,
+       price,
+       slp
+  FROM asset
+ WHERE uid = \'{uid}\';'''.format(uid=uid))
+    assets = cursor.fetchall()
+    cursor.close()
+    conn.close()
 
     portfolio = {}
     if ignore_dates:
@@ -44,17 +46,20 @@ SELECT "label",
 
 # Get a user's total investing capital
 def get_total_capital(uid):
-    auth_provider = PlainTextAuthProvider(DB_USERNAME, DB_PASSWORD)
-    cluster = Cluster(cloud={'secure_connect_bundle': DB_BUNDLE_LOCATION}, auth_provider=auth_provider)
-    conn = cluster.connect()
-    conn.execute('USE maelstrom;')
-
-    query = '''
-SELECT "capital"
-  FROM "user"
- WHERE "uid" = \'{uid}\' ALLOW FILTERING;'''.format(uid=uid)
-    capital = conn.execute(query).one()
-    conn.shutdown()
+    conn = MySQLdb.connect(
+        host=DB_HOST,
+        user=DB_USERNAME,
+        passwd=DB_PASSWORD,
+        db=DB_NAME
+    )
+    cursor = conn.cursor()
+    cursor.execute('''
+SELECT capital
+  FROM user
+ WHERE uid = \'{uid}\';'''.format(uid=uid))
+    capital = cursor.fetchone()
+    cursor.close()
+    conn.close()
     if capital:
-        return capital[0]
+        return capital
     return None
