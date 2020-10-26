@@ -17,7 +17,7 @@ Fizz is an interactive personal financial consultant perfect for providing the b
 ### How It Works:
 A user opens Fizz and is greeted by a prompt to fill out and upload their portfolio and current holdings. Once uploaded, Fizz analyzes this data and is ready to interact with the user. The user can ask a variety of questions, ranging from "Should I buy stock ABC?" to "Tell me about my current portfolio." Fizz, pulling data from various public APIs and expert recommendations, provides relevant and effective answers to the user's questions.
 
-Visit https://stonkify.xyz to use Fizz!
+Visit **https://stonkify.xyz** to use Fizz!
 
 ### Resources:
 * https://www.blackrock.com/tools/api-tester/hackathon
