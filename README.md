@@ -24,3 +24,6 @@ Visit **https://stonkify.xyz** to use Fizz!
 * https://financialmodelingprep.com/api/v3
 * https://cloud.google.com/dialogflow/docs
 * https://www.datastax.com/products/datastax-astra
+
+![Fizz Logo](https://github.com/therealsharath/hackgt7/blob/master/Fizz%20Logo%20Full.png)
+
