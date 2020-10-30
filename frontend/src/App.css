@@ -39,61 +39,6 @@ button:hover {
   /* color: #fafafa; */
 }
 
-.login-screen {
-  min-width: 100vw;
-  min-height: 100vh;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-}
-
-.login-bg-image {
-  height: 100vh;
-  background-image: linear-gradient(rgba(0,0,0,0.5), rgba(0,0,0,0.5)),url(./components/images/login.jpg);
-  background-repeat: no-repeat;
-  background-position: center;
-  -webkit-background-size: cover;
-  -moz-background-size: cover;
-  -o-background-size: cover;
-  background-size: cover;
-}
-
-.login-box {
-  background-color: rgb(255, 255, 255, 0.3);
-  min-width: 20vw;
-  height: 60vh;
-  border-radius: 30px;
-}
-
-.main-logo {
-  width : 20vw;
-  border-radius: 20px;
-}
-
-.simply {
-  padding: 1vw 0;
-}
-
-.google-icon {
-  height: 1vw;
-  width: 1vw;
-  padding-left: 8px;
-}
-
-.nav-button {
-  background-color: transparent;
-  border: solid;
-  border-color: #fafafa;
-  border-width: 0.25vw;
-  padding: 0.5vw 2vw; 
-}
-
-.chat-bot {
-  min-height: 80vh;
-  min-width: 80vw;
-  border-radius: 15px;
-}
-
 .new-stock {
   display: flex;
   justify-content: space-around;
@@ -138,15 +83,6 @@ input, select {
 
 .label {
   padding-left: 2px;
-}
-
-.special {
-  padding-bottom: 20vw;
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;
-  align-items: space-between;
-  height: 56vh;
 }
 
 .portfolio-container {
@@ -354,7 +290,69 @@ input, select {
   align-items: center;
 }
 
+/* Authentication */
+.login-screen {
+  min-width: 100vw;
+  min-height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.login-bg-image {
+  height: 100vh;
+  background-image: linear-gradient(rgba(0,0,0,0.5), rgba(0,0,0,0.5)),url(./components/images/login.jpg);
+  background-repeat: no-repeat;
+  background-position: center;
+  -webkit-background-size: cover;
+  -moz-background-size: cover;
+  -o-background-size: cover;
+  background-size: cover;
+}
+
+.login-box {
+  background-color: rgb(255, 255, 255, 0.3);
+  min-width: 20vw;
+  border-radius: 20px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.main-logo {
+  min-width : 20vw;
+  height: 20vw;
+  border-radius: 20px 20px 0 0;
+}
+
+.sign-in {
+  padding: 3vh;
+}
+
+.google-icon {
+  height: 12px;
+  width: 12px;
+  padding-left: 8px;
+}
+
+.sign-out-button {
+  background-color: transparent;
+  border: solid;
+  border-color: #fafafa;
+  border-width: 0.2vw;
+  padding: 0.5vw 2vw; 
+}
+
 @media only screen and (max-width: 600px) {
+  button {
+    background-color: #1C1C1E;
+    border-radius: 30px;
+    color: #fafafa;
+    padding: 4vw 8vw;
+    font-family: 'Noto Sans JP', sans-serif;
+    font-weight: 500;
+  }
+  
   /* Home */
   .login-box {
     min-width: 70vw;
@@ -447,5 +445,16 @@ input, select {
   .chat-send {
     height: 12vw;
     width: 12vw;
+  }
+  /* Authentication */
+  .main-logo {
+    width : 70vw;
+    height: 70vw;
+  }
+
+  .sign-out-button {
+    border-width: 0.5vw;
+    padding: 1vw 4vw; 
+    font-size: 3vw;
   }
 }

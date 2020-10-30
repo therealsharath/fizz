@@ -37,7 +37,7 @@ function SignIn() {
 
 function SignOut() {
     return auth.currentUser && (
-        <button className="nav-button" onClick={() => auth.signOut()}>Sign Out </button>
+        <button className="sign-out-button" onClick={() => auth.signOut()}>Sign Out </button>
     )
 }
 
@@ -90,12 +90,8 @@ function Authentication(props) {
     return(
         !user ? <div className="login-screen login-bg-image">
             <div className="login-box">
-                <div className="special">
-                    <img src={fizz} className="main-logo"/>
-                    <div className="simply">
-                        <SignIn/>
-                    </div>
-                </div>
+                <img src={fizz} className="main-logo"/>
+                <div className="sign-in"><SignIn/></div>
             </div>
         </div> : <SignOut/>
     )
