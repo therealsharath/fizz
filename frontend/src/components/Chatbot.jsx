@@ -8,6 +8,7 @@ import userpic from './images/stonksuser.png';
 
 function Chatbot(props) {
     const [messageBoard, setMessageBoard] = useState([...props.messageBoard])
+    const [userImage, setUserImage] = useState(userpic)
     
     const sendMessage = (message) => {
         if (message.length > 0) {
@@ -28,8 +29,15 @@ function Chatbot(props) {
             .then(function (response) {
                 let newMessages = [...messageBoard];
                 newMessages.push(['user', message])
-                if (JSON.stringify(response.data.response) !== "") {
-                    newMessages.push(['bot', JSON.stringify(response.data.response)]);
+                if (JSON.stringify(response.data.response) !== null || JSON.stringify(response.data.response).length > 1) {
+                    if (JSON.stringify(response.data.response).length > 40) {
+                        let arr = JSON.stringify(response.data.response).substring(1, JSON.stringify(response.data.response).length - 1).match( /[^\.!\?]+[\.!\?]+/g );
+                        arr ? arr.forEach((item) => {
+                            newMessages.push(['bot', item])
+                        }) : newMessages.push(['bot', "I'm not sure what you mean?"]);
+                    } else {
+                        newMessages.push(['bot', JSON.stringify(response.data.response).substring(1, JSON.stringify(response.data.response).length - 1)])
+                    }
                 } else {
                     newMessages.push(['bot', "I'm not sure what you mean?"]);
                 }
@@ -54,14 +62,17 @@ function Chatbot(props) {
         messagesEndRef.current.scrollIntoView({ behavior: "smooth" })
     }
 
-    useEffect(scrollToBottom, [messageBoard]);
+    useEffect(() => {
+        scrollToBottom()
+        if(props.user && userImage !== props.user.photoURL) setUserImage(props.user.photoURL)
+    }, [messageBoard, userImage, setUserImage, props.user]);
     
     return(
         <div className="bot">
             <div className="message-container">
                 <div className="message-board">
                     {messageBoard !== [] && messageBoard.map((item) => <div className={"container " + item[0] + "-message"} key={messageBoard.indexOf(item)}>
-                        <img src={item[0] === 'bot' ? fizzlogo : userpic} alt="Avatar"/>
+                        <img src={item[0] === 'bot' ? fizzlogo : userImage} alt="Avatar"/>
                         <font className={item[0] + "-text"}>{item[1]}</font>
                     </div>)}
                     <div ref={messagesEndRef} />
