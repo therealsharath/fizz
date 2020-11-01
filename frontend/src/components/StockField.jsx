@@ -9,28 +9,30 @@ const defaultValues = {
 };
 
 function StockField(props) {
-    const { register, handleSubmit, reset, control } = useForm({defaultValues});
+    const { register, handleSubmit, reset, control, errors } = useForm({defaultValues});
     const [selectedDate, setselectedDate] = useState(null);
 
     const onSubmit = (data) => {
         reset();
-        let newPortfolio = [...props.portfolio]
-        data.purchaseDate = data.purchaseDate.getDate()+"/"+data.purchaseDate.getMonth()+"/"+data.purchaseDate.getFullYear()
-        newPortfolio.push(data)
-        console.log(newPortfolio);
-        props.setPortfolio(newPortfolio)
+        let newPortfolio = [...props.portfolio];
+        data.purchaseDate = data.purchaseDate.getDate()+"/"+data.purchaseDate.getMonth()+"/"+data.purchaseDate.getFullYear();
+        newPortfolio.push(data);
+        props.setPortfolio(newPortfolio);
+        props.submitPortfolio();
     }
 
     return(
         <form className="new-stock" onSubmit={handleSubmit(onSubmit)}>
             <div className="form-item">
                 <label className="label">Stock Ticker</label>
-                <input id="ticker" name="ticker" type="text" ref={register} placeholder="Eg. AAPL"/>
+                <input name="ticker" type="text" ref={register({ required: true })} placeholder="Eg. AAPL"/>
+                {errors.ticker && <span className="err">This field is required</span>}
             </div>
 
             <div className="form-item">
                 <label className="label">Stock Quantity</label>
-                <input name="quantity" type="text" ref={register} placeholder="Number of shares you own"/>
+                <input name="quantity" type="text" ref={register({ required: true })} placeholder="Number of shares you own"/>
+                {errors.quantity && <span className="err">This field is required</span>}
             </div>
 
             <section className="form-item">
@@ -47,19 +49,21 @@ function StockField(props) {
                     dateFormat="dd/MM/yyyy"
                     placeholderText="Select Date"
                     name="purchaseDate"
+                    rules={{ required: true }}
                     defaultValue={null}
                     maxDate={new Date()}
                 />
+                {errors.purchaseDate && <span className="err">This field is required</span>}
             </section>
 
             <div className="form-item">
-                <label className="label">Stop-loss Point/Downside Put</label>
+                <label className="label">Stop-loss/Downside (Optional)</label>
                 <input name="slp" type="text" ref={register} placeholder="Eg. 5" defaultValue={0}/>
             </div>
 
             <div className="form-item">
                 <label className="hide label"></label>
-                <button className="form-button" type="submit" >Add Stock</button>
+                <button type="submit" >Add Stock</button>
             </div>
         </form>
     )

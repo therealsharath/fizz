@@ -32,10 +32,7 @@ function Portfolio(props) {
     const submitPortFolio = () => {
         props.setPortfolio(portfolio);
         if(props.user) {
-            console.log("Great Success")
             submitPortFolioHelper(portfolio);
-        } else {
-            console.log("oops")
         }
     }
 
@@ -50,8 +47,9 @@ function Portfolio(props) {
 
             <div className="add-new">
                 <h2>Add additional stocks</h2>
-                <StockField portfolio={portfolio} setPortfolio={setPortfolio}/>
-                <button onClick={submitPortFolio}>Submit Portfolio</button>
+                <StockField portfolio={portfolio} setPortfolio={setPortfolio} submitPortfolio={submitPortFolio}/>
+                <div className="buffer"/>
+                {/* <button onClick={}>Submit Portfolio</button> */}
             </div>
         </div>
     )

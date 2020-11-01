@@ -68,7 +68,7 @@ function Home() {
                     <div className={navWrapperClass}>
                             <div className="open-nav-link" onClick={handleOpenFizz}>Fizz</div>
                             <div className="open-nav-link" onClick={handleOpenPortfolio}>Portfolio</div>
-                            <a className="open-nav-link" href="https://docs.google.com/document/d/1aeIvsM8bKKWKqaCXBCv7tIAwjWvPFJ6s40DcxDTlx7Q/" target="_blank" rel="noopener noreferrer">Docs</a>
+                            <a className="open-nav-link" href="https://docs.google.com/document/d/1aeIvsM8bKKWKqaCXBCv7tIAwjWvPFJ6s40DcxDTlx7Q/" target="_blank" rel="noopener noreferrer" onClick={open}>Docs</a>
                             <div className="open-nav-link" onClick={() => console.log(4)}>About Us</div>
                     </div>
                     {isUpload && <Portfolio user={user} portfolio={portfolio} setPortfolio={setPortfolio}/>}

@@ -30,8 +30,9 @@ function Chatbot(props) {
                 let newMessages = [...messageBoard];
                 newMessages.push(['user', message])
                 if (JSON.stringify(response.data.response) !== null || JSON.stringify(response.data.response).length > 1) {
-                    if (JSON.stringify(response.data.response).length > 40) {
-                        let arr = JSON.stringify(response.data.response).substring(1, JSON.stringify(response.data.response).length - 1).match(/[^\.!\?]+[\.!\?]+["']?|\s*$/g); // eslint-disable-next-line 
+                    if (JSON.stringify(response.data.response).length > 60) {
+                        //eslint-disable-next-line
+                        let arr = JSON.stringify(response.data.response).substring(1, JSON.stringify(response.data.response).length - 1).replace(/(\.+|\:|\!|\?)(\"*|\'*|\)*|}*|]*)(\s|\n|\r|\r\n)/gm, "$1$2|").split("|");
                         arr ? arr.forEach((item) => {
                             newMessages.push(['bot', item])
                         }) : newMessages.push(['bot', "I'm not sure what you mean?"]);
