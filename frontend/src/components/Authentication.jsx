@@ -30,7 +30,7 @@ function SignIn() {
 
     return (
         <div>
-            <button onClick={signInWithGoogle}>Sign in with <img className="google-icon" src={gImg}></img></button>
+            <button onClick={signInWithGoogle}>Sign in with <img className="google-icon" src={gImg} alt="google-icon"></img></button>
         </div>
     )
 }
@@ -90,7 +90,7 @@ function Authentication(props) {
     return(
         !user ? <div className="login-screen login-bg-image">
             <div className="login-box">
-                <img src={fizz} className="main-logo"/>
+                <img src={fizz} className="main-logo" alt="app-logo"/>
                 <div className="sign-in"><SignIn/></div>
             </div>
         </div> : <SignOut/>

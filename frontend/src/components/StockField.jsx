@@ -1,28 +1,21 @@
 import React, { useState } from 'react';
 import { useForm, Controller } from "react-hook-form";
-import { yupResolver } from '@hookform/resolvers/yup';
-import * as yup from "yup";
 
-import ReactDatePicker from "react-datepicker";
+import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 
-const schema = yup.object().shape({
-    ticker: yup.string().required(),
-    quantity: yup.number().positive().integer().required(),
-    slp: yup.number(),
-});
+const defaultValues = {
+    Native: ""
+};
 
 function StockField(props) {
-    const { register, handleSubmit, errors, reset, control } = useForm({
-        resolver: yupResolver(schema)
-    });
-
-    const [selected, setSelected] = useState(new Date());
+    const { register, handleSubmit, reset, control } = useForm({defaultValues});
+    const [selectedDate, setselectedDate] = useState(null);
 
     const onSubmit = (data) => {
         reset();
         let newPortfolio = [...props.portfolio]
-        data.date = data.date.toString()
+        data.purchaseDate = data.purchaseDate.getDate()+"/"+data.purchaseDate.getMonth()+"/"+data.purchaseDate.getFullYear()
         newPortfolio.push(data)
         console.log(newPortfolio);
         props.setPortfolio(newPortfolio)
@@ -40,20 +33,24 @@ function StockField(props) {
                 <input name="quantity" type="text" ref={register} placeholder="Number of shares you own"/>
             </div>
 
-            <div className="form-item">
+            <section className="form-item">
                 <label className="label">Date Purchased</label>
                 <Controller
+                    as={DatePicker}
                     control={control}
-                    as={ReactDatePicker}
-                    valueName={selected} // DateSelect value's name is selected
-                    onChange={([selected]) => setSelected(selected)}
-                    name="date"
-                    placeholderText={selected}
-                    dateFormat="yyyy/MM/dd"
+                    valueName="selected"
+                    selected={selectedDate}
+                    onChange={([selected]) => {
+                        setselectedDate(selected);
+                        return selected;
+                    }}
+                    dateFormat="dd/MM/yyyy"
+                    placeholderText="Select Date"
+                    name="purchaseDate"
+                    defaultValue={null}
                     maxDate={new Date()}
-                    dateFormat="d MMM yyyy"
                 />
-            </div>
+            </section>
 
             <div className="form-item">
                 <label className="label">Stop-loss Point/Downside Put</label>

@@ -55,7 +55,7 @@ function Home() {
                         <div className="nav-wrapper">
                             <div className="nav-link" onClick={handleFizz}>Fizz</div>
                             <div className="nav-link" onClick={handlePortfolio}>Portfolio</div>
-                            <div className="nav-link" onClick={() => console.log(3)}>Docs</div>
+                            <a className="nav-link" href="https://docs.google.com/document/d/1aeIvsM8bKKWKqaCXBCv7tIAwjWvPFJ6s40DcxDTlx7Q/" target="_blank" rel="noopener noreferrer">Docs</a>
                             <div className="nav-link" onClick={() => console.log(4)}>About Us</div>
                         </div>
                         <div className="sign-out-nav"><Authentication setIsLogged={setIsLogged} setUser={setUser}/></div>
@@ -68,7 +68,7 @@ function Home() {
                     <div className={navWrapperClass}>
                             <div className="open-nav-link" onClick={handleOpenFizz}>Fizz</div>
                             <div className="open-nav-link" onClick={handleOpenPortfolio}>Portfolio</div>
-                            <div className="open-nav-link" onClick={() => console.log(3)}>Docs</div>
+                            <a className="open-nav-link" href="https://docs.google.com/document/d/1aeIvsM8bKKWKqaCXBCv7tIAwjWvPFJ6s40DcxDTlx7Q/" target="_blank" rel="noopener noreferrer">Docs</a>
                             <div className="open-nav-link" onClick={() => console.log(4)}>About Us</div>
                     </div>
                     {isUpload && <Portfolio user={user} portfolio={portfolio} setPortfolio={setPortfolio}/>}

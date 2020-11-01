@@ -40,12 +40,12 @@ function Portfolio(props) {
     }
 
     return(
-        <div className="portfolio-containter">
+        <div className="portfolio-container">
             <h1>Your Portfolio</h1>
             <div className="main-folio">
-                {(portfolio.length >= 1) ? portfolio.map((item) => <div>
-                    {"Stock:" + item.ticker + "| Quantity: " + item.quantity + "| Purchase date" + item.date.toString() + "| Stop-loss/Downside put: " + item.slp}
-                </div>) : <h2>Your portfolio is empty 😭</h2>}
+                {(portfolio.length >= 1) ? portfolio.map((item) => <div key={portfolio.indexOf(item)}>
+                    {"Stock:" + item.ticker + "| Quantity: " + item.quantity + "| Purchase date: " + item.purchaseDate + "| Stop-loss/Downside put: " + item.slp}
+                </div>) : <h2>Your portfolio is empty <span role="img" aria-label="cry">😭</span></h2>}
             </div>
 
             <div className="add-new">

@@ -31,7 +31,7 @@ function Chatbot(props) {
                 newMessages.push(['user', message])
                 if (JSON.stringify(response.data.response) !== null || JSON.stringify(response.data.response).length > 1) {
                     if (JSON.stringify(response.data.response).length > 40) {
-                        let arr = JSON.stringify(response.data.response).substring(1, JSON.stringify(response.data.response).length - 1).match( /[^\.!\?]+[\.!\?]+/g );
+                        let arr = JSON.stringify(response.data.response).substring(1, JSON.stringify(response.data.response).length - 1).match(/[^\.!\?]+[\.!\?]+["']?|\s*$/g); // eslint-disable-next-line 
                         arr ? arr.forEach((item) => {
                             newMessages.push(['bot', item])
                         }) : newMessages.push(['bot', "I'm not sure what you mean?"]);

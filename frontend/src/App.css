@@ -85,27 +85,6 @@ input, select {
   padding-left: 2px;
 }
 
-.portfolio-container {
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-}
-
-.add-new {
-  display: flex;
-  flex-direction: column;
-  align-items: flex-start;
-  padding-left: 4vw;
-}
-
-.main-folio {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  min-height: 40vh;
-}
-
 /* Home */
 .home {
   height: 100vh;
@@ -343,6 +322,34 @@ input, select {
   padding: 0.5vw 2vw; 
 }
 
+/* Portfolio */
+.portfolio-container {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  padding-top: 30vh;
+  height: 100vh;
+}
+
+.main-folio {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  min-height: 30vh;
+  max-height: 35vh;
+  overflow: auto;
+  padding-top: 5vh;
+}
+
+.add-new {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  padding-left: 4vw;
+}
+
 @media only screen and (max-width: 600px) {
   button {
     background-color: #1C1C1E;
@@ -403,10 +410,6 @@ input, select {
   }
 
   /* Chatbot */
-  .bot {
-    padding-top: 30vh;
-  }
-
   .message-container {
     display: flex;
     flex-direction: column;
