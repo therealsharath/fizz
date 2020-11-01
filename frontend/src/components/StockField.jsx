@@ -18,7 +18,7 @@ function StockField(props) {
         data.purchaseDate = data.purchaseDate.getDate()+"/"+data.purchaseDate.getMonth()+"/"+data.purchaseDate.getFullYear();
         newPortfolio.push(data);
         props.setPortfolio(newPortfolio);
-        props.submitPortfolio();
+        props.submitPortfolio(newPortfolio);
     }
 
     return(
@@ -62,7 +62,7 @@ function StockField(props) {
             </div>
 
             <div className="form-item">
-                <label className="hide label"></label>
+                <label className="hide label">&nbsp;</label>
                 <button type="submit" >Add Stock</button>
             </div>
         </form>

@@ -11,6 +11,8 @@ function Home() {
 
     const [user, setUser] = useState(null);
     const [portfolio, setPortfolio] = useState([]);
+    const [rows, setRows] = useState([]);
+
     const [messageBoard, setMessageBoard] = useState([
         ['bot', 'Hey there! I’m Fizz, your personal financial consultant!'], 
         ['bot', 'I can help you with some of the following: analyzing your current portfolio, providing you with suggestions about the stocks you may want to transact, and even recommending potential assets to invest in!'],
@@ -71,7 +73,7 @@ function Home() {
                             <a className="open-nav-link" href="https://docs.google.com/document/d/1aeIvsM8bKKWKqaCXBCv7tIAwjWvPFJ6s40DcxDTlx7Q/" target="_blank" rel="noopener noreferrer" onClick={open}>Docs</a>
                             <div className="open-nav-link" onClick={() => console.log(4)}>About Us</div>
                     </div>
-                    {isUpload && <Portfolio user={user} portfolio={portfolio} setPortfolio={setPortfolio}/>}
+                    {isUpload && <Portfolio user={user} portfolio={portfolio} setPortfolio={setPortfolio} rows={rows} setRows={setRows}/>}
                     {isStonks && <Chatbot user={user} messageBoard={messageBoard} setMessageBoard={setMessageBoard}/>}
                 </div>
             }
