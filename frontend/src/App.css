@@ -292,8 +292,8 @@ input, select {
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  height: 80vh;
-  padding-top: 10vh;
+  height: 70vh;
+  padding-top: 15vh;
 }
 
 .main-folio {
