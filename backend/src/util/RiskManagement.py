@@ -118,7 +118,7 @@ def calcBuySellOpinions(buySellIndex):
     else:
         return "buy, buy, buy!"
 
-# return a string representing risk factors certain asset depending on the given riskIndex (taken from API)
+# return a string representing risk factors certain asset depending on the given riskIndex (taken from BlackRock API)
 def calcPossibleRisk(riskIndex):
     if riskIndex < 0:
         return "risky"
@@ -166,8 +166,8 @@ def shouldBuy(asset, amountBought, riskManagementPrice, totalCapital):
     gold = recentGoldenCross(prices)
     buySellIndex = getRecommendations(asset)
     recommend = calcBuySellOpinions(buySellIndex)
-    riskIndex = getRisk(asset)
-    possibleRisk = calcPossibleRisk(riskIndex)
+    # riskIndex = getRisk(asset)
+    # possibleRisk = calcPossibleRisk(riskIndex)
 
     capitalRisked, riskManaged = percentRisk(amountBought, prices[0], riskManagementPrice, totalCapital)
 
@@ -185,7 +185,8 @@ more research into this. ".format(name = asset)
         else:
             returnString += "Experts agree that you should {opinion} ".format(opinion = recommend)
 
-        returnString += "Our algorithm has also decided that buying {name} is {risk}. ".format(name = asset, risk = round(possibleRisk * 100, 2))
+        # Black Rock API is gone :(
+        # returnString += "Our algorithm has also decided that buying {name} is {risk}. ".format(name = asset, risk = possibleRisk)
 
         if capitalRisked <= 0.01 and riskManaged:
             returnString += "Regardless, good job on managing your risks as well!"
