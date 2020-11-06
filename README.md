@@ -17,10 +17,14 @@ Fizz is an interactive personal financial consultant perfect for providing the b
 ### How It Works:
 A user opens Fizz and is greeted by a prompt to fill out and upload their portfolio and current holdings. Once uploaded, Fizz analyzes this data and is ready to interact with the user. The user can ask a variety of questions, ranging from "Should I buy stock ABC?" to "Tell me about my current portfolio." Fizz, pulling data from various public APIs and expert recommendations, provides relevant and effective answers to the user's questions.
 
-Visit https://therealsharath.github.io/hackgt7/ to use Fizz!
+Visit **https://stonkify.xyz** to use Fizz!
 
 ### Resources:
 * https://www.blackrock.com/tools/api-tester/hackathon
 * https://financialmodelingprep.com/api/v3
 * https://cloud.google.com/dialogflow/docs
 * https://www.datastax.com/products/datastax-astra
+
+<p align="center">
+  <kbd><img src="https://github.com/therealsharath/hackgt7/blob/master/Fizz%20Logo%20Full.png" /></kbd>
+</p>

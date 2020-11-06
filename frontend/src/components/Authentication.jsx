@@ -30,14 +30,14 @@ function SignIn() {
 
     return (
         <div>
-            <button onClick={signInWithGoogle}>Sign in with <img className="google-icon" src={gImg}></img></button>
+            <button onClick={signInWithGoogle}>Sign in with <img className="google-icon" src={gImg} alt="google-icon"></img></button>
         </div>
     )
 }
 
 function SignOut() {
     return auth.currentUser && (
-        <button className="nav-button" onClick={() => auth.signOut()}>Sign Out </button>
+        <button className="sign-out-button" onClick={() => auth.signOut()}>Sign Out </button>
     )
 }
 
@@ -47,7 +47,7 @@ function Authentication(props) {
 
     const [isLogged, setIsLogged] = useState(false);
     const [dataSent, setDataSent] = useState(false);
-
+    
     useEffect(() => {
         async function sendUserData(){
             var data = JSON.stringify({
@@ -90,12 +90,8 @@ function Authentication(props) {
     return(
         !user ? <div className="login-screen login-bg-image">
             <div className="login-box">
-                <div className="special">
-                    <img src={fizz} className="main-logo"/>
-                    <div className="simply">
-                        <SignIn/>
-                    </div>
-                </div>
+                <img src={fizz} className="main-logo" alt="app-logo"/>
+                <div className="sign-in"><SignIn/></div>
             </div>
         </div> : <SignOut/>
     )
