@@ -118,7 +118,7 @@ def calcBuySellOpinions(buySellIndex):
     else:
         return "buy, buy, buy!"
 
-# return a string representing risk factors certain asset depending on the given riskIndex (taken from API)
+# return a string representing risk factors certain asset depending on the given riskIndex (taken from BlackRock API)
 def calcPossibleRisk(riskIndex):
     if riskIndex < 0:
         return "risky"
@@ -166,8 +166,8 @@ def shouldBuy(asset, amountBought, riskManagementPrice, totalCapital):
     gold = recentGoldenCross(prices)
     buySellIndex = getRecommendations(asset)
     recommend = calcBuySellOpinions(buySellIndex)
-    riskIndex = getRisk(asset)
-    possibleRisk = calcPossibleRisk(riskIndex)
+    # riskIndex = getRisk(asset)
+    # possibleRisk = calcPossibleRisk(riskIndex)
 
     capitalRisked, riskManaged = percentRisk(amountBought, prices[0], riskManagementPrice, totalCapital)
 
@@ -185,7 +185,8 @@ more research into this. ".format(name = asset)
         else:
             returnString += "Experts agree that you should {opinion} ".format(opinion = recommend)
 
-        returnString += "Our algorithm has also decided that buying {name} is {risk}. ".format(name = asset, risk = possibleRisk)
+        # Black Rock API is gone :(
+        # returnString += "Our algorithm has also decided that buying {name} is {risk}. ".format(name = asset, risk = possibleRisk)
 
         if capitalRisked <= 0.01 and riskManaged:
             returnString += "Regardless, good job on managing your risks as well!"
@@ -193,18 +194,18 @@ more research into this. ".format(name = asset)
             returnString += "Regardless, consider hedging your position through downside puts or stop-loss points."
         elif capitalRisked > 0.01 and riskManaged:
             returnString += "However, you are risking {risked} percent of your capital, which is more than \
-advisable.".format(risked = capitalRisked * 100)
+advisable.".format(risked = round(capitalRisked * 100, 2))
         elif capitalRisked > 0.01 and not riskManaged:
             returnString += "However, you are risking {risked} percent of your capital, which is more than advisable. \
 If you hedge your position through downside puts or stop-loss points, you can lower the \
-capital that you risk.".format(risked = capitalRisked * 100)
+capital that you risk.".format(risked = round(capitalRisked * 100, 2))
     else:
         if buySellIndex >= 0.6:
             returnString =  "Our algorithm does not see a clear reason to buy, but experts say that you should {opinion} \
 I advise that you do some additional research. ".format(opinion = recommend)
         else:
             returnString = "Taking into account our algorithm and the recommendations of experts, we would advise \
-you not to buy {name}. ".format(name = asset)
+you not to buy {name} right now. ".format(name = asset)
 
         if capitalRisked <= 0.01 and riskManaged:
             returnString += "Regardless, good job on managing your risks as well!"
@@ -212,11 +213,11 @@ you not to buy {name}. ".format(name = asset)
             returnString += "Regardless, consider hedging your position through downside puts or stop-loss points."
         elif capitalRisked > 0.01 and riskManaged:
             returnString += "However, note that you are risking {risked} percent of your capital, which is more than \
-advisable.".format(risked = capitalRisked * 100)
+advisable.".format(risked = round(capitalRisked * 100, 2))
         elif capitalRisked > 0.01 and not riskManaged:
             returnString += "However, you are risking {risked} percent of your capital, which is more than advisable. \
 If you hedge your position through downside puts or stop-loss points, you can lower the \
-capital that you risk.".format(risked = capitalRisked * 100)
+capital that you risk.".format(risked = round(capitalRisked * 100, 2))
     return returnString
 
 # Helper method for anaylzePortfolio that populates the string with all of the risky assets included

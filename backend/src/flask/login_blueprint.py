@@ -10,7 +10,7 @@ from flask import Blueprint, request, jsonify
 from cassandra.cluster import Cluster
 from cassandra.auth import PlainTextAuthProvider
 from auth import authenticate
-from StockPrices import getDatePrice
+from StockPrices import getDatePrice, assetExists
 from config import DB_USERNAME, DB_PASSWORD, DB_BUNDLE_LOCATION
 
 
@@ -53,6 +53,8 @@ def post_portfolio_upload():
     id = conn.execute('SELECT "id" FROM "pkid" WHERE "label" = \'asset\';').one()[0]
     c = 0
     for asset in portfolio:
+        if not assetExists(asset['ticker']):
+            continue
         date = datetime.strptime(asset['date'][:15], '%a %b %d %Y').strftime('%Y-%m-%d')
         price = getDatePrice(asset['ticker'], date)
         conn.execute('INSERT INTO "asset" ("id", "uid", "label", "quantity", "bought", "price", "slp") VALUES ({id}, \'{uid}\', \'{label}\', {quantity}, \'{bought}\', {price}, {slp});'.format(id=id + c, uid=uid, label=asset['ticker'], quantity=asset['quantity'], bought=date, price=price, slp=asset['slp']))
